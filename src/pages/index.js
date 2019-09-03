@@ -1,9 +1,10 @@
 import React from "react";
 import { graphql } from "gatsby";
-import Layout from "../components/layout";
-import SEO from "../components/seo";
-import { CodeContainer } from "../components/code-container";
-import { CodeItem } from "../components/code-item";
+
+import Layout from "components/Layout";
+import SEO from "components/seo";
+import { CodeContainer } from "components/CodeContainer";
+import { CodeItem } from "components/CodeItem";
 
 export const data = graphql`
     query {

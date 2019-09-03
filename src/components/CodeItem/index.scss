@@ -1,0 +1,56 @@
+@import "src/styles/modules.scss";
+@import "src/styles/variables.scss";
+
+.code-item {
+    flex-basis: calc((100% - 5rem) / 6);
+    margin: 0 1rem 1rem 0;
+    @include border($bright-gray);
+    border-radius: 1rem;
+    padding-bottom: 0.5rem;
+    background: white;
+    text-align: center;
+    box-shadow: 0 0 0.5rem rgba($bright-gray, 0.5);
+
+    &:nth-child(6n) {
+        margin-right: 0;
+    }
+
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 1rem;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        padding: 1.5rem 0 1.8rem;
+        background: $brand;
+
+        span {
+            height: 4rem;
+            font-size: 4rem;
+            font-weight: bold;
+            color: $white;
+            margin: 0;
+        }
+    }
+
+    span {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+        font-weight: normal;
+    }
+
+    li {
+        line-height: 1.25;
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: $brand-text;
+        @include pointer;
+
+        span {
+            color: $brand;
+        }
+    }
+}

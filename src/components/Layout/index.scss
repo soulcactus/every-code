@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans&display=swap");
+@import "src/styles/reset.scss";
+@import "src/styles/modules.scss";
+@import "src/styles/variables.scss";
+
+body {
+    background: $white-gray;
+    font-family: "Noto Sans", sans-serif;
+    font-size: 1.6rem;
+}
+
+div {
+    box-sizing: border-box;
+    @include default;
+}
