@@ -1,4 +1,5 @@
 const metaConfig = require("./gatsby-meta-config");
+const path = require("path");
 
 module.exports = {
     siteMetadata: metaConfig,
@@ -22,7 +23,7 @@ module.exports = {
                 background_color: `#663399`,
                 theme_color: `#663399`,
                 display: `minimal-ui`,
-                icon: `src/images/gatsby-icon.png` // This path is relative to the root of the site.
+                icon: `src/images/gatsby-icon.png`
             }
         },
         {
@@ -37,9 +38,30 @@ module.exports = {
             options: {
                 noheader: false
             }
+        },
+        `gatsby-plugin-sass`,
+        {
+            resolve: `gatsby-plugin-sass`,
+            options: {
+                sassRuleTest: /\.global\.s(a|c)ss$/,
+                debug: true,
+                sourceMap: true,
+                useResolveUrlLoader: true,
+                includePaths: [""],
+                cssLoaderOptions: {
+                    camelCase: false
+                }
+            }
+        },
+        "gatsby-plugin-root-import",
+        {
+            resolve: "gatsby-plugin-root-import",
+            options: {
+                static: path.join(__dirname, "static"),
+                components: path.join(__dirname, "src/components"),
+                pages: path.join(__dirname, "src/pages"),
+                styles: path.join(__dirname, "src/styles")
+            }
         }
-        // this (optional) plugin enables Progressive Web App + Offline functionality
-        // To learn more, visit: https://gatsby.dev/offline
-        // `gatsby-plugin-offline`,
     ]
 };
