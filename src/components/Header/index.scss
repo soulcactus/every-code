@@ -1,0 +1,14 @@
+@import "src/styles/modules.scss";
+@import "src/styles/variables.scss";
+
+header {
+    padding: 2rem 0;
+    background: $brand;
+    font-size: 2rem;
+    color: $white;
+
+    div {
+        max-width: 96rem;
+        margin: 0 auto;
+    }
+}

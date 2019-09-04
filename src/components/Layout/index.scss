@@ -13,3 +13,20 @@ div {
     box-sizing: border-box;
     @include default;
 }
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.content-wrap {
+    max-width: 96rem;
+    margin: 0 auto;
+}
+
+input[type="search"] {
+    -webkit-appearance: textfield;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
