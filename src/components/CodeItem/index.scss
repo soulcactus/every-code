@@ -3,6 +3,7 @@
 
 .code-item {
     flex-basis: calc((100% - 5rem) / 6);
+    position: relative;
     margin: 0 1rem 1rem 0;
     @include border($bright-gray);
     border-radius: 1rem;
@@ -15,7 +16,7 @@
         margin-right: 0;
     }
 
-    div {
+    > div {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -52,5 +53,18 @@
         span {
             color: $brand;
         }
+    }
+}
+
+.bookmark {
+    position: absolute;
+    top: 0rem;
+    right: 0.5rem;
+    font-size: 1rem;
+    color: $white;
+    @include pointer;
+
+    img {
+        width: 1.5rem;
     }
 }
