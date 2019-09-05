@@ -53,14 +53,14 @@ module.exports = {
                 }
             }
         },
-        "gatsby-plugin-root-import",
+        `gatsby-plugin-root-import`,
         {
-            resolve: "gatsby-plugin-root-import",
+            resolve: `gatsby-plugin-root-import`,
             options: {
-                static: path.join(__dirname, "static"),
-                components: path.join(__dirname, "src/components"),
-                pages: path.join(__dirname, "src/pages"),
-                styles: path.join(__dirname, "src/styles")
+                components: path.join(__dirname, `src/components`),
+                pages: path.join(__dirname, `src/pages`),
+                styles: path.join(__dirname, `src/styles`),
+                images: path.join(__dirname, `src/images`)
             }
         }
     ]
