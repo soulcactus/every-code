@@ -1,0 +1,22 @@
+@import "src/styles/modules.scss";
+@import "src/styles/variables.scss";
+
+.go-top {
+    @include size(4rem, 4rem);
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    @include border($bright-gray);
+    border-radius: 100%;
+    background: $white;
+    box-shadow: 0 0 0.5rem rgba($black, 0.1);
+
+    &:hover {
+        box-shadow: 0 0 0.75rem rgba($black, 0.2);
+        transition: all 100ms linear;
+    }
+
+    img {
+        width: 1.5rem;
+    }
+}
