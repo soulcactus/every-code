@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "author": "Soulcactus <sunhyejin@mensakorea.org>",
   "dependencies": {
+    "crypto": "^1.0.1",
     "gatsby": "^2.13.73",
     "gatsby-image": "^2.2.10",
     "gatsby-plugin-manifest": "^2.2.6",
