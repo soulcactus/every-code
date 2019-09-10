@@ -1,0 +1,18 @@
+@import "src/styles/variables.scss";
+
+.no-result {
+    width: 100%;
+    margin-top: 1.5rem;
+    text-align: center;
+
+    span {
+        display: block;
+        font-size: 3rem;
+        font-weight: bold;
+        color: $brand;
+    }
+
+    img {
+        width: 40rem;
+    }
+}
