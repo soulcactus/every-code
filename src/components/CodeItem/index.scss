@@ -33,6 +33,7 @@
             font-weight: bold;
             color: $white;
             margin: 0;
+            @include pointer;
         }
     }
 
@@ -45,7 +46,7 @@
 
     li {
         line-height: 1.25;
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         font-weight: bold;
         color: $brand-text;
         @include pointer;

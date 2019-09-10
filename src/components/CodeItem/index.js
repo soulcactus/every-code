@@ -1,25 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import "./index.scss";
 
 const CodeItem = ({ node, handleCopy, handleMark, children }) => {
-    const codeList = (code, codeType) => {
-        return (
-            <li onClick={() => handleCopy(code)}>
-                {code}
-                <span>{codeType}</span>
-            </li>
-        );
-    };
+    const codeList = (code, codeType) => (
+        <li onClick={() => handleCopy(code)}>
+            {code}
+            <span>{codeType}</span>
+        </li>
+    );
 
-    const bookmark = () => {
-        handleMark(node);
-    };
+    const bookmark = () => handleMark(node);
 
     return (
         <div className="code-item" key={node.id}>
-            <div title={node.description}>
+            <div title={node.name}>
                 <div
                     className="bookmark"
                     title="bookmark"
@@ -27,13 +23,13 @@ const CodeItem = ({ node, handleCopy, handleMark, children }) => {
                 >
                     {children}
                 </div>
-                <span>{node.char}</span>
+                <span onClick={() => handleCopy(node.char)}>{node.char}</span>
             </div>
             <ul>
-                {codeList(node.cssCode, `CSS Code`)}
-                {codeList(node.hexCode, `HEX Code`)}
-                {codeList(node.htmlCode, `HTML Code`)}
                 {node.htmlEntity && codeList(node.htmlEntity, `HTML Entity`)}
+                {codeList(node.htmlCode, `HTML Code`)}
+                {codeList(node.hexCode, `HEX Code`)}
+                {codeList(node.cssCode, `CSS Code`)}
             </ul>
         </div>
     );
