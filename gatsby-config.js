@@ -47,7 +47,7 @@ module.exports = {
                 debug: true,
                 sourceMap: true,
                 useResolveUrlLoader: true,
-                includePaths: [""],
+                includePaths: [``],
                 cssLoaderOptions: {
                     camelCase: false
                 }
@@ -60,7 +60,8 @@ module.exports = {
                 components: path.join(__dirname, `src/components`),
                 pages: path.join(__dirname, `src/pages`),
                 styles: path.join(__dirname, `src/styles`),
-                images: path.join(__dirname, `src/images`)
+                images: path.join(__dirname, `src/images`),
+                hooks: path.join(__dirname, `src/hooks`)
             }
         }
     ]
