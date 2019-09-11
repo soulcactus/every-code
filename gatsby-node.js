@@ -9,7 +9,7 @@ exports.sourceNodes = ({ actions }) => {
             id: code.id,
             char: code.char,
             name: code.name,
-            catecory: code.catecory,
+            category: code.category,
             htmlEntity: code.htmlEntity,
             htmlCode: code.htmlCode,
             hexCode: code.hexCode,
