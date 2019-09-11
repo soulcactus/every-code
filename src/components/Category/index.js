@@ -2,22 +2,47 @@ import React from "react";
 
 import "./index.scss";
 
-const Category = ({ handleCategory }) => {
-    const categorySelect = (idx) => {
-        const categoryList = document.querySelectorAll(".category li");
-
-        categoryList.forEach((item) => item.classList.remove("selected"));
-        categoryList[idx].classList.add("selected");
-        handleCategory(idx);
-    };
+const Category = ({ handleCategory, categoryIdx }) => {
+    const categoryList = [
+        "ALL",
+        "Standard",
+        "Emoji",
+        "Latin",
+        "Latin Extended",
+        "Modifier Letters",
+        "Diacritical Marks",
+        "Greek and Coptic",
+        "Cyrillic",
+        "General Punctuation",
+        "Currency Symbols",
+        "Letterlike Symbols",
+        "Arrows",
+        "Mathematical Operators",
+        "Box Drawings",
+        "Block Elements",
+        "Geometric Shapes",
+        "Miscellaneous Symbols",
+        "Dingbats"
+    ];
 
     return (
         <div className="category">
             <ul>
-                <li className="selected" onClick={() => categorySelect(0)}>
-                    ALL
-                </li>
-                <li onClick={() => categorySelect(1)}>Standard</li>
+                {categoryList.map((item, idx) =>
+                    categoryIdx === idx ? (
+                        <li
+                            className="selected"
+                            onClick={() => handleCategory(idx)}
+                            key={idx}
+                        >
+                            {item}
+                        </li>
+                    ) : (
+                        <li onClick={() => handleCategory(idx)} key={idx}>
+                            {item}
+                        </li>
+                    )
+                )}
             </ul>
         </div>
     );

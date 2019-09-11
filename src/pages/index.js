@@ -12,8 +12,6 @@ import NoResult from "components/NoResult";
 import GoTop from "components/GoTop";
 import Category from "components/Category";
 
-import { standardData } from "hooks/category";
-
 import unmarked from "images/bookmark-unmarked.svg";
 import marked from "images/bookmark-marked.svg";
 
@@ -25,6 +23,7 @@ export const data = graphql`
                     id
                     char
                     name
+                    category
                     htmlEntity
                     htmlCode
                     hexCode
@@ -40,15 +39,36 @@ const IndexPage = ({ data }) => {
     const edges = data.allCode.edges;
     const initialCodeList = edges.slice(0, 60);
     const [searchValue, setSearchValue] = useState("");
+    const [categoryIdx, setCategoryIdx] = useState(0);
     const [copyState, setCopyState] = useState(false);
     const [markState, setMarkState] = useState(false);
     const [markList, setMarkList] = useState([]);
     const [codeList, setCodeList] = useState(initialCodeList);
-    const [categoryIdx, setCategoryIdx] = useState(0);
     let bookmark = [];
     let codes = codeList;
     let searchCodes;
     let markRestCodes;
+
+    const categoryList = [
+        "Standard",
+        "Emoji",
+        "Latin",
+        "Latin Extended",
+        "Modifier Letters",
+        "Diacritical Marks",
+        "Greek and Coptic",
+        "Cyrillic",
+        "General Punctuation",
+        "Currency Symbols",
+        "Letterlike Symbols",
+        "Arrows",
+        "Mathematical Operators",
+        "Box Drawings",
+        "Block Elements",
+        "Geometric Shapes",
+        "Miscellaneous Symbols",
+        "Dingbats"
+    ];
 
     const getCurrentScrollPercentage = () =>
         ((window.scrollY + window.innerHeight) / document.body.clientHeight) *
@@ -57,22 +77,20 @@ const IndexPage = ({ data }) => {
     const handleSearch = (value) => {
         setSearchValue(value);
         setCodeList(initialCodeList);
+
+        searchCodes = edges.filter((item) =>
+            searchValue.includes(item.node.char)
+        );
+
+        codes = searchCodes;
     };
 
-    const handleCopy = (code) => {
-        const body = document.body;
-        const dummy = document.createElement(`textarea`);
+    const handleCategory = (idx) => {
+        setCategoryIdx(idx);
 
-        body.appendChild(dummy);
-        dummy.value = code;
-        dummy.select();
-        document.execCommand(`copy`);
-        body.removeChild(dummy);
-        setCopyState(true);
-
-        setTimeout(() => {
-            setCopyState(false);
-        }, 500);
+        if (idx === 0) {
+            setCodeList(initialCodeList);
+        }
     };
 
     const handleMark = (node) => {
@@ -94,30 +112,46 @@ const IndexPage = ({ data }) => {
         }
     };
 
-    const handleScroll = function() {
-        if (edges && getCurrentScrollPercentage() > 90) {
-            setCodeList((prevCodes) => {
-                let addList = prevCodes.length + 60;
+    const handleCopy = (code) => {
+        const body = document.body;
+        const dummy = document.createElement(`textarea`);
 
-                if (prevCodes.length + 60 >= edges.length) {
-                    addList = edges.length;
-                }
+        body.appendChild(dummy);
+        dummy.value = code;
+        dummy.select();
+        document.execCommand(`copy`);
+        body.removeChild(dummy);
+        setCopyState(true);
 
-                return [
-                    ...prevCodes,
-                    ...edges.slice(prevCodes.length, addList)
-                ];
-            });
+        setTimeout(() => {
+            setCopyState(false);
+        }, 500);
+    };
+
+    const handleScrollTop = () => {
+        if (categoryIdx === 0) {
+            setCodeList(initialCodeList);
         }
     };
 
-    const handleScrollTop = () => setCodeList(initialCodeList);
-
-    const handleCategory = (idx) => {
-        setCategoryIdx(idx);
-    };
-
     useEffect(() => {
+        const handleScroll = function() {
+            if (getCurrentScrollPercentage() > 90) {
+                setCodeList((prevCodes) => {
+                    let addList = prevCodes.length + 60;
+
+                    if (prevCodes.length + 60 >= edges.length) {
+                        addList = edges.length;
+                    }
+
+                    return [
+                        ...prevCodes,
+                        ...edges.slice(prevCodes.length, addList)
+                    ];
+                });
+            }
+        };
+
         for (const [key, value] of Object.entries(storage)) {
             if (!isNaN(Number(key))) {
                 const node = JSON.parse(value);
@@ -130,7 +164,15 @@ const IndexPage = ({ data }) => {
         window.addEventListener(`scroll`, handleScroll, false);
 
         return () => window.removeEventListener(`scroll`, handleScroll);
-    }, []);
+    }, [categoryIdx]);
+
+    for (let i = 0; i <= categoryList.length; i++) {
+        if (categoryIdx === i + 1) {
+            codes = edges.filter(
+                (item) => item.node.category === categoryList[i]
+            );
+        }
+    }
 
     if (searchValue) {
         searchCodes = edges.filter((item) =>
@@ -155,7 +197,12 @@ const IndexPage = ({ data }) => {
             {copyState && <Message message={`Copied to Clipboard! 😊`} />}
             {markState && <Message message={`Added to the bookmark! ⭐️`} />}
             <Search handleSearch={handleSearch} />
-            {!searchValue && <Category handleCategory={handleCategory} />}
+            {!searchValue && (
+                <Category
+                    handleCategory={handleCategory}
+                    categoryIdx={categoryIdx}
+                />
+            )}
             <CodeContainer>
                 {codes.length !== 0 ? (
                     codes.map(({ node }, index) => (
