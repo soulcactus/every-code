@@ -8,7 +8,7 @@ import goTop from "images/go-top.svg";
 const GoTop = ({ handleScrollTop }) => {
     const scrollTop = () => {
         let scrollY = window.scrollY;
-        let scrollSpeed = scrollY / 4;
+        let scrollSpeed = scrollY / 2;
 
         if (scrollY < 1) {
             handleScrollTop();
