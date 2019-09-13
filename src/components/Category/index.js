@@ -8,7 +8,6 @@ const Category = ({ handleCategory, categoryIdx }) => {
         "Standard",
         "Emoji",
         "Latin",
-        "Latin Extended",
         "Modifier Letters",
         "Diacritical Marks",
         "Greek and Coptic",
@@ -35,11 +34,11 @@ const Category = ({ handleCategory, categoryIdx }) => {
                             onClick={() => handleCategory(idx)}
                             key={idx}
                         >
-                            {item}
+                            <span>{item}</span>
                         </li>
                     ) : (
                         <li onClick={() => handleCategory(idx)} key={idx}>
-                            {item}
+                            <span>{item}</span>
                         </li>
                     )
                 )}
