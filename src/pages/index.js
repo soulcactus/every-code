@@ -35,7 +35,7 @@ export const data = graphql`
 `;
 
 const IndexPage = ({ data }) => {
-    const storage = window.localStorage;
+    const storage = typeof window !== `undefined` ? window.localStorage : null;
     const edges = data.allCode.edges;
     const initialCodeList = edges.slice(0, 60);
     const [searchValue, setSearchValue] = useState("");
