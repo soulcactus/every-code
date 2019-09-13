@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import "./index.scss";
 
-const CodeItem = ({ node, handleCopy, handleMark, children }) => {
+const CodeItem = ({ node, handleCopy, handleBookmark, children }) => {
     const codeList = (code, codeType) => (
         <li onClick={() => handleCopy(code)}>
             {code}
@@ -11,7 +11,7 @@ const CodeItem = ({ node, handleCopy, handleMark, children }) => {
         </li>
     );
 
-    const bookmark = () => handleMark(node);
+    const bookmark = () => handleBookmark(node);
 
     return (
         <div className="code-item" key={node.id}>
@@ -38,7 +38,7 @@ const CodeItem = ({ node, handleCopy, handleMark, children }) => {
 CodeItem.propTypes = {
     node: PropTypes.object.isRequired,
     handleCopy: PropTypes.func.isRequired,
-    handleMark: PropTypes.func.isRequired,
+    handleBookmark: PropTypes.func.isRequired,
     children: PropTypes.node.isRequired
 };
 
