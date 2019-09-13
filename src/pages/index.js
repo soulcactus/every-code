@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import { graphql } from "gatsby";
 
@@ -40,11 +40,10 @@ const IndexPage = ({ data }) => {
     const initialCodeList = edges.slice(0, 60);
     const [searchValue, setSearchValue] = useState("");
     const [categoryIdx, setCategoryIdx] = useState(0);
-    const [copyState, setCopyState] = useState(false);
-    const [markState, setMarkState] = useState(false);
-    const [markList, setMarkList] = useState([]);
     const [codeList, setCodeList] = useState(initialCodeList);
-    let bookmark = [];
+    const [bookmarkState, setbookmarkState] = useState(false);
+    const [bookmarkList, setbookmarkList] = useState([]);
+    const [copyState, setCopyState] = useState(false);
     let codes = codeList;
     let searchCodes;
     let markRestCodes;
@@ -53,7 +52,6 @@ const IndexPage = ({ data }) => {
         "Standard",
         "Emoji",
         "Latin",
-        "Latin Extended",
         "Modifier Letters",
         "Diacritical Marks",
         "Greek and Coptic",
@@ -93,22 +91,24 @@ const IndexPage = ({ data }) => {
         }
     };
 
-    const handleMark = (node) => {
+    const handleBookmark = (node) => {
         const id = node.id;
-        const overlapCode = markList.filter((item) => id === item.node.id);
-        const removeRestCodes = markList.filter((item) => id !== item.node.id);
+        const overlapCode = bookmarkList.filter((item) => id === item.node.id);
+        const removeRestCodes = bookmarkList.filter(
+            (item) => id !== item.node.id
+        );
 
         if (overlapCode.length === 0) {
             storage.setItem(id, JSON.stringify(node));
-            setMarkList([...markList, { node }]);
-            setMarkState(true);
+            setbookmarkList([...bookmarkList, { node }]);
+            setbookmarkState(true);
 
             setTimeout(() => {
-                setMarkState(false);
+                setbookmarkState(false);
             }, 500);
         } else {
             storage.removeItem(id);
-            setMarkList(removeRestCodes);
+            setbookmarkList(removeRestCodes);
         }
     };
 
@@ -128,6 +128,23 @@ const IndexPage = ({ data }) => {
         }, 500);
     };
 
+    const handleScroll = useCallback(() => {
+        if (getCurrentScrollPercentage() > 90) {
+            setCodeList((prevCodes) => {
+                let addList = prevCodes.length + 60;
+
+                if (prevCodes.length + 60 >= edges.length) {
+                    addList = edges.length;
+                }
+
+                return [
+                    ...prevCodes,
+                    ...edges.slice(prevCodes.length, addList)
+                ];
+            });
+        }
+    }, [edges]);
+
     const handleScrollTop = () => {
         if (categoryIdx === 0) {
             setCodeList(initialCodeList);
@@ -135,22 +152,7 @@ const IndexPage = ({ data }) => {
     };
 
     useEffect(() => {
-        const handleScroll = function() {
-            if (getCurrentScrollPercentage() > 90) {
-                setCodeList((prevCodes) => {
-                    let addList = prevCodes.length + 60;
-
-                    if (prevCodes.length + 60 >= edges.length) {
-                        addList = edges.length;
-                    }
-
-                    return [
-                        ...prevCodes,
-                        ...edges.slice(prevCodes.length, addList)
-                    ];
-                });
-            }
-        };
+        let bookmark = [];
 
         for (const [key, value] of Object.entries(storage)) {
             if (!isNaN(Number(key))) {
@@ -160,11 +162,13 @@ const IndexPage = ({ data }) => {
             }
         }
 
-        setMarkList(bookmark);
-        window.addEventListener(`scroll`, handleScroll, false);
+        setbookmarkList(bookmark);
 
-        return () => window.removeEventListener(`scroll`, handleScroll);
-    }, [categoryIdx]);
+        if (categoryIdx === 0) {
+            window.addEventListener(`scroll`, handleScroll, false);
+            return () => window.removeEventListener(`scroll`, handleScroll);
+        }
+    }, [storage, categoryIdx, handleScroll]);
 
     for (let i = 0; i <= categoryList.length; i++) {
         if (categoryIdx === i + 1) {
@@ -182,20 +186,22 @@ const IndexPage = ({ data }) => {
         codes = searchCodes;
     }
 
-    if (markList.length !== 0) {
-        const id = markList.map((item) => item.node.id);
+    if (bookmarkList.length !== 0) {
+        const id = bookmarkList.map((item) => item.node.id);
 
         markRestCodes = codes.filter((item) => !id.includes(item.node.id));
         searchValue
             ? (codes = searchCodes)
-            : (codes = [...markList, ...markRestCodes]);
+            : (codes = [...bookmarkList, ...markRestCodes]);
     }
 
     return (
         <Layout>
             <SEO title="Home" />
             {copyState && <Message message={`Copied to Clipboard! 😊`} />}
-            {markState && <Message message={`Added to the bookmark! ⭐️`} />}
+            {bookmarkState && (
+                <Message message={`Added to the bookmark! ⭐️`} />
+            )}
             <Search handleSearch={handleSearch} />
             {!searchValue && (
                 <Category
@@ -209,16 +215,16 @@ const IndexPage = ({ data }) => {
                         <CodeItem
                             node={node}
                             handleCopy={handleCopy}
-                            handleMark={handleMark}
+                            handleBookmark={handleBookmark}
                             key={index}
                         >
                             {!searchValue ? (
-                                index < markList.length ? (
+                                index < bookmarkList.length ? (
                                     <img src={marked} alt="marked" />
                                 ) : (
                                     <img src={unmarked} alt="unmarked" />
                                 )
-                            ) : markList
+                            ) : bookmarkList
                                   .map((item) => item.node.id)
                                   .includes(node.id) ? (
                                 <img src={marked} alt="marked" />
