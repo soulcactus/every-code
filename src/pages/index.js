@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { graphql } from "gatsby";
 
@@ -44,29 +44,8 @@ const IndexPage = ({ data }) => {
     const [bookmarkState, setbookmarkState] = useState(false);
     const [bookmarkList, setbookmarkList] = useState([]);
     const [copyState, setCopyState] = useState(false);
-    let codes = codeList;
-    let searchCodes;
-    let markRestCodes;
-
-    const categoryList = [
-        "Standard",
-        "Emoji",
-        "Latin",
-        "Modifier Letters",
-        "Diacritical Marks",
-        "Greek and Coptic",
-        "Cyrillic",
-        "General Punctuation",
-        "Currency Symbols",
-        "Letterlike Symbols",
-        "Arrows",
-        "Mathematical Operators",
-        "Box Drawings",
-        "Block Elements",
-        "Geometric Shapes",
-        "Miscellaneous Symbols",
-        "Dingbats"
-    ];
+    const list = useRef(codeList);
+    let codes = useRef(null);
 
     const getCurrentScrollPercentage = () =>
         ((window.scrollY + window.innerHeight) / document.body.clientHeight) *
@@ -74,21 +53,10 @@ const IndexPage = ({ data }) => {
 
     const handleSearch = (value) => {
         setSearchValue(value);
-        setCodeList(initialCodeList);
-
-        searchCodes = edges.filter((item) =>
-            searchValue.includes(item.node.char)
-        );
-
-        codes = searchCodes;
     };
 
     const handleCategory = (idx) => {
         setCategoryIdx(idx);
-
-        if (idx === 0) {
-            setCodeList(initialCodeList);
-        }
     };
 
     const handleBookmark = (node) => {
@@ -128,28 +96,132 @@ const IndexPage = ({ data }) => {
         }, 500);
     };
 
-    const handleScroll = useCallback(() => {
-        if (getCurrentScrollPercentage() > 90) {
-            setCodeList((prevCodes) => {
-                let addList = prevCodes.length + 60;
+    const handleScrollTop = () => {
+        setCodeList((allCode) => allCode.slice(0, 60));
+    };
 
-                if (prevCodes.length + 60 >= edges.length) {
-                    addList = edges.length;
+    list.current = codeList;
+
+    useEffect(() => {
+        const initialCodeList = edges.slice(0, 60);
+        const id = bookmarkList.map((item) => item.node.id);
+        const listLen = list.current.length;
+        const searchLen = searchValue.length;
+        const bookmarkLen = bookmarkList.length;
+
+        const expression = () =>
+            listLen <= 1 ||
+            (listLen - searchLen > 1 && listLen - searchLen <= 60);
+
+        const categoryList = [
+            "Standard",
+            "Emoji",
+            "Latin",
+            "Modifier Letters",
+            "Diacritical Marks",
+            "Greek and Coptic",
+            "Cyrillic",
+            "General Punctuation",
+            "Currency Symbols",
+            "Letterlike Symbols",
+            "Arrows",
+            "Mathematical Operators",
+            "Box Drawings",
+            "Block Elements",
+            "Geometric Shapes",
+            "Miscellaneous Symbols",
+            "Dingbats"
+        ];
+
+        let bookmarkRestCodes;
+
+        if (searchLen !== 0) {
+            const searchCodes = edges.filter((item) =>
+                searchValue.includes(item.node.char)
+            );
+
+            setCodeList(searchCodes);
+        } else {
+            if (categoryIdx === 0) {
+                const filter = edges.filter(
+                    (item) => !id.includes(item.node.id)
+                );
+
+                setCodeList(initialCodeList);
+
+                if (bookmarkLen !== 0) {
+                    if (expression()) {
+                        bookmarkRestCodes = filter.slice(0, 60 - bookmarkLen);
+                    } else {
+                        bookmarkRestCodes = filter.slice(
+                            0,
+                            listLen - bookmarkLen
+                        );
+                    }
                 }
 
-                return [
-                    ...prevCodes,
-                    ...edges.slice(prevCodes.length, addList)
-                ];
-            });
-        }
-    }, [edges]);
+                codes.current = filter;
+            }
 
-    const handleScrollTop = () => {
-        if (categoryIdx === 0) {
-            setCodeList(initialCodeList);
+            for (let i = 0; i <= categoryList.length; i++) {
+                const filter = edges.filter(
+                    (item) =>
+                        item.node.category === categoryList[i] &&
+                        !id.includes(item.node.id)
+                );
+
+                if (categoryIdx === i + 1) {
+                    setCodeList(
+                        edges
+                            .filter(
+                                (item) => item.node.category === categoryList[i]
+                            )
+                            .slice(0, 60)
+                    );
+
+                    codes.current = filter;
+
+                    if (bookmarkLen !== 0) {
+                        if (expression()) {
+                            bookmarkRestCodes = filter.slice(
+                                0,
+                                60 - bookmarkLen
+                            );
+                        } else {
+                            bookmarkRestCodes = filter.slice(
+                                0,
+                                listLen - bookmarkLen
+                            );
+                        }
+                    }
+                }
+            }
+
+            if (bookmarkLen !== 0) {
+                setCodeList([...bookmarkList, ...bookmarkRestCodes]);
+            }
         }
-    };
+    }, [searchValue, categoryIdx, bookmarkList, edges]);
+
+    useEffect(() => {
+        setCodeList((allCode) => allCode.slice(0, 60));
+
+        const handleScroll = () => {
+            if (getCurrentScrollPercentage() > 90) {
+                setCodeList((prevCodes) => {
+                    let addList = prevCodes.length + 60;
+
+                    return [
+                        ...prevCodes,
+                        ...codes.current.slice(prevCodes.length, addList)
+                    ];
+                });
+            }
+        };
+
+        window.addEventListener(`scroll`, handleScroll, false);
+        return () => window.removeEventListener(`scroll`, handleScroll);
+    }, [categoryIdx]);
 
     useEffect(() => {
         let bookmark = [];
@@ -163,37 +235,7 @@ const IndexPage = ({ data }) => {
         }
 
         setbookmarkList(bookmark);
-
-        if (categoryIdx === 0) {
-            window.addEventListener(`scroll`, handleScroll, false);
-            return () => window.removeEventListener(`scroll`, handleScroll);
-        }
-    }, [storage, categoryIdx, handleScroll]);
-
-    for (let i = 0; i <= categoryList.length; i++) {
-        if (categoryIdx === i + 1) {
-            codes = edges.filter(
-                (item) => item.node.category === categoryList[i]
-            );
-        }
-    }
-
-    if (searchValue) {
-        searchCodes = edges.filter((item) =>
-            searchValue.includes(item.node.char)
-        );
-
-        codes = searchCodes;
-    }
-
-    if (bookmarkList.length !== 0) {
-        const id = bookmarkList.map((item) => item.node.id);
-
-        markRestCodes = codes.filter((item) => !id.includes(item.node.id));
-        searchValue
-            ? (codes = searchCodes)
-            : (codes = [...bookmarkList, ...markRestCodes]);
-    }
+    }, [storage]);
 
     return (
         <Layout>
@@ -210,8 +252,8 @@ const IndexPage = ({ data }) => {
                 />
             )}
             <CodeContainer>
-                {codes.length !== 0 ? (
-                    codes.map(({ node }, index) => (
+                {codeList.length !== 0 ? (
+                    codeList.map(({ node }, index) => (
                         <CodeItem
                             node={node}
                             handleCopy={handleCopy}
