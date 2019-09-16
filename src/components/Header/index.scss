@@ -1,13 +1,29 @@
+@import "src/styles/modules.scss";
 @import "src/styles/variables.scss";
 
 header {
-    padding: 2rem 0;
-    background: $brand;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 1.5rem 0;
+    background: $dark-gray;
     font-size: 2rem;
     color: $white;
+    z-index: 10;
 
-    div {
+    > div {
+        @include space-between;
         max-width: 96rem;
         margin: 0 auto;
     }
+
+    img {
+        width: 3rem;
+    }
+}
+
+.buy-coffee {
+    width: 16rem;
+    margin-left: 1.5rem;
 }
