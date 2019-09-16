@@ -21,12 +21,10 @@ const Layout = ({ children }) => {
             <Header siteTitle={data.site.siteMetadata.title} />
             <div className="content-wrap">
                 <main>{children}</main>
-                <footer>
-                    © {new Date().getFullYear()}, Built with
-                    {` `}
-                    <a href="https://www.gatsbyjs.org">Gatsby</a>
-                </footer>
             </div>
+            <footer>
+                Copyright &copy; 2019 Soulcactus&#46; All right reserved&#46;
+            </footer>
         </>
     );
 };
