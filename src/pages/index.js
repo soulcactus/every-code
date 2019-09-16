@@ -62,6 +62,7 @@ const IndexPage = ({ data }) => {
     const handleBookmark = (node) => {
         const id = node.id;
         const overlapCode = bookmarkList.filter((item) => id === item.node.id);
+
         const removeRestCodes = bookmarkList.filter(
             (item) => id !== item.node.id
         );
@@ -201,7 +202,7 @@ const IndexPage = ({ data }) => {
                 setCodeList([...bookmarkList, ...bookmarkRestCodes]);
             }
         }
-    }, [searchValue, categoryIdx, bookmarkList, edges]);
+    }, [edges, bookmarkList, searchValue, categoryIdx]);
 
     useEffect(() => {
         setCodeList((allCode) => allCode.slice(0, 60));
@@ -258,7 +259,7 @@ const IndexPage = ({ data }) => {
                             node={node}
                             handleCopy={handleCopy}
                             handleBookmark={handleBookmark}
-                            key={index}
+                            key={node.id}
                         >
                             {!searchValue ? (
                                 index < bookmarkList.length ? (
