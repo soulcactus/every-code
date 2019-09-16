@@ -6,7 +6,7 @@ const Category = ({ handleCategory, categoryIdx }) => {
     const categoryList = [
         "ALL",
         "Standard",
-        "Emoji",
+        "Emoji 😎",
         "Latin",
         "Modifier Letters",
         "Diacritical Marks",

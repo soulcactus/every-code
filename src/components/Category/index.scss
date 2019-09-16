@@ -5,8 +5,6 @@
     ul {
         @include flex-start;
         margin-bottom: 3rem;
-        @include border($bright-gray);
-        background: $white;
     }
 
     li {
@@ -15,6 +13,7 @@
         position: relative;
         @include border($bright-gray);
         padding: 0.75rem 1.5rem;
+        background: $white;
         line-height: 1.75rem;
         text-align: center;
         font-size: 1.4rem;
@@ -23,9 +22,9 @@
 
         &.selected {
             border-color: $brand;
-            background: $brand;
+            background: rgba($brand, 0.1);
             font-weight: bold;
-            color: $white;
+            color: $brand;
         }
     }
 
