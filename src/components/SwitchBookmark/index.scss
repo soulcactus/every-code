@@ -1,0 +1,70 @@
+@import "src/styles/modules.scss";
+@import "src/styles/variables.scss";
+
+.switch-wrap {
+    height: 2.8rem;
+    margin-top: 9.3rem;
+    position: relative;
+
+    div {
+        width: 8.3rem;
+        @include space-between;
+        position: absolute;
+        right: 0;
+    }
+
+    label {
+        @include size(5.4rem, 2.8rem);
+        display: block;
+        position: relative;
+
+        span {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            border-radius: 2rem;
+            background: $light-gray;
+            -webkit-transition: 400ms;
+            transition: 400ms;
+            @include pointer;
+
+            &::before {
+                content: "";
+                @include size(2rem, 2rem);
+                position: absolute;
+                left: 0.4rem;
+                bottom: 0.4rem;
+                border-radius: 50%;
+                background: $white;
+                -webkit-transition: 400ms;
+                transition: 400ms;
+            }
+        }
+    }
+
+    input {
+        @include size(0, 0);
+        opacity: 0;
+
+        &:checked + span {
+            background: $brand;
+        }
+
+        &:focus + span {
+            box-shadow: 0 0 0.1rem $brand;
+        }
+
+        &:checked + span::before {
+            -webkit-transform: translateX(2.6rem);
+            -ms-transform: translateX(2.6rem);
+            transform: translateX(2.6rem);
+        }
+    }
+
+    span {
+        position: relative;
+        top: 0.5rem;
+    }
+}

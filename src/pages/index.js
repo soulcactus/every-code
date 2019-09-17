@@ -2,15 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { graphql } from "gatsby";
 
-import Layout from "components/Layout";
 import SEO from "components/seo";
+import Layout from "components/Layout";
+import Message from "components/Message";
+import SwitchBookmark from "components/SwitchBookmark";
+import Search from "components/Search";
+import NoResult from "components/NoResult";
+import Category from "components/Category";
 import CodeContainer from "components/CodeContainer";
 import CodeItem from "components/CodeItem";
-import Search from "components/Search";
-import Message from "components/Message";
-import NoResult from "components/NoResult";
 import GoTop from "components/GoTop";
-import Category from "components/Category";
 
 import unmarked from "images/bookmark-unmarked.svg";
 import marked from "images/bookmark-marked.svg";
@@ -51,8 +52,8 @@ const IndexPage = ({ data }) => {
         ((window.scrollY + window.innerHeight) / document.body.clientHeight) *
         100;
 
-    const handleSearch = (value) => {
-        setSearchValue(value);
+    const handleSearch = (e) => {
+        setSearchValue(e.target.value);
     };
 
     const handleCategory = (idx) => {
@@ -115,23 +116,23 @@ const IndexPage = ({ data }) => {
             (listLen - searchLen > 1 && listLen - searchLen <= 60);
 
         const categoryList = [
-            "Standard",
-            "Emoji",
-            "Latin",
-            "Modifier Letters",
-            "Diacritical Marks",
-            "Greek and Coptic",
-            "Cyrillic",
-            "General Punctuation",
-            "Currency Symbols",
-            "Letterlike Symbols",
-            "Arrows",
-            "Mathematical Operators",
-            "Box Drawings",
-            "Block Elements",
-            "Geometric Shapes",
-            "Miscellaneous Symbols",
-            "Dingbats"
+            `Standard`,
+            `Emoji`,
+            `Latin`,
+            `Modifier Letters`,
+            `Diacritical Marks`,
+            `Greek and Coptic`,
+            `Cyrillic`,
+            `General Punctuation`,
+            `Currency Symbols`,
+            `Letterlike Symbols`,
+            `Arrows`,
+            `Mathematical Operators`,
+            `Box Drawings`,
+            `Block Elements`,
+            `Geometric Shapes`,
+            `Miscellaneous Symbols`,
+            `Dingbats`
         ];
 
         let bookmarkRestCodes;
@@ -245,6 +246,7 @@ const IndexPage = ({ data }) => {
             {bookmarkState && (
                 <Message message={`Added to the bookmark! ⭐️`} />
             )}
+            <SwitchBookmark />
             <Search handleSearch={handleSearch} />
             {!searchValue && (
                 <Category
@@ -254,7 +256,7 @@ const IndexPage = ({ data }) => {
             )}
             <CodeContainer>
                 {codeList.length !== 0 ? (
-                    codeList.map(({ node }, index) => (
+                    codeList.map(({ node }, idx) => (
                         <CodeItem
                             node={node}
                             handleCopy={handleCopy}
@@ -262,7 +264,7 @@ const IndexPage = ({ data }) => {
                             key={node.id}
                         >
                             {!searchValue ? (
-                                index < bookmarkList.length ? (
+                                idx < bookmarkList.length ? (
                                     <img src={marked} alt="marked" />
                                 ) : (
                                     <img src={unmarked} alt="unmarked" />
