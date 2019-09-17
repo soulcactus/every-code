@@ -11,7 +11,7 @@ const Search = ({ handleSearch }) => {
                 id="search"
                 className="search"
                 placeholder="👉 Search what you want"
-                onChange={(e) => handleSearch(e.target.value)}
+                onChange={handleSearch}
             />
         </>
     );

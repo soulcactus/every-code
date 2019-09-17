@@ -21,7 +21,7 @@ const GoTop = ({ handleScrollTop }) => {
     };
 
     return (
-        <button className="go-top" onClick={() => scrollTop()}>
+        <button className="go-top" onClick={scrollTop}>
             <img src={goTop} alt="go top" />
         </button>
     );

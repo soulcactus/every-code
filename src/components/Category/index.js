@@ -4,24 +4,24 @@ import "./index.scss";
 
 const Category = ({ handleCategory, categoryIdx }) => {
     const categoryList = [
-        "ALL",
-        "Standard",
-        "Emoji 😎",
-        "Latin",
-        "Modifier Letters",
-        "Diacritical Marks",
-        "Greek and Coptic",
-        "Cyrillic",
-        "General Punctuation",
-        "Currency Symbols",
-        "Letterlike Symbols",
-        "Arrows",
-        "Mathematical Operators",
-        "Box Drawings",
-        "Block Elements",
-        "Geometric Shapes",
-        "Miscellaneous Symbols",
-        "Dingbats"
+        `ALL`,
+        `Standard`,
+        `Emoji 😎`,
+        `Latin`,
+        `Modifier Letters`,
+        `Diacritical Marks`,
+        `Greek and Coptic`,
+        `Cyrillic`,
+        `General Punctuation`,
+        `Currency Symbols`,
+        `Letterlike Symbols`,
+        `Arrows`,
+        `Mathematical Operators`,
+        `Box Drawings`,
+        `Block Elements`,
+        `Geometric Shapes`,
+        `Miscellaneous Symbols`,
+        `Dingbats`
     ];
 
     return (

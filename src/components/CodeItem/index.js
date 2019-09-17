@@ -11,15 +11,13 @@ const CodeItem = ({ node, handleCopy, handleBookmark, children }) => {
         </li>
     );
 
-    const bookmark = () => handleBookmark(node);
-
     return (
         <div className="code-item" key={node.id}>
             <div title={node.name}>
                 <div
                     className="bookmark"
                     title="bookmark"
-                    onClick={() => bookmark()}
+                    onClick={() => handleBookmark(node)}
                 >
                     {children}
                 </div>
