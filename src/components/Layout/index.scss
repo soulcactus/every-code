@@ -5,7 +5,7 @@
 
 body {
     background: $white-gray;
-    font-family: "Noto Sans", sans-serif;
+    font-family: "Apple Color Emoji", "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Sans", sans-serif;
     font-size: 1.6rem;
 }
 
@@ -37,6 +37,7 @@ input[type="search"] {
 }
 
 footer {
+    margin: 0.4rem 0 1.5rem;
     padding: 1.5rem;
     text-align: center;
     font-weight: bold;
