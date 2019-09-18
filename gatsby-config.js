@@ -5,25 +5,18 @@ module.exports = {
     siteMetadata: metaConfig,
     plugins: [
         `gatsby-plugin-react-helmet`,
-        {
-            resolve: `gatsby-source-filesystem`,
-            options: {
-                name: `images`,
-                path: `${__dirname}/src/images`
-            }
-        },
         `gatsby-transformer-sharp`,
         `gatsby-plugin-sharp`,
         {
             resolve: `gatsby-plugin-manifest`,
             options: {
-                name: `gatsby-starter-default`,
-                short_name: `starter`,
+                name: metaConfig.title,
+                short_name: metaConfig.title,
                 start_url: `/`,
-                background_color: `#663399`,
-                theme_color: `#663399`,
+                background_color: `#f9f9f9`,
+                theme_color: `#2d3037`,
                 display: `minimal-ui`,
-                icon: `src/images/gatsby-icon.png`
+                icon: metaConfig.icon
             }
         },
         {
@@ -31,12 +24,6 @@ module.exports = {
             options: {
                 name: `data`,
                 path: `${__dirname}/src/data/`
-            }
-        },
-        {
-            resolve: `gatsby-transformer-csv`,
-            options: {
-                noheader: false
             }
         },
         `gatsby-plugin-sass`,
