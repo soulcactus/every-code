@@ -30,7 +30,7 @@ const Header = ({ siteTitle }) => (
                     <img
                         src={buyMeACoffee}
                         alt="buy me a coffee"
-                        className="buy-coffee"
+                        className="buy-me-a-coffee"
                     />
                 </a>
             </div>

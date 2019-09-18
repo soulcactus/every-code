@@ -7,7 +7,7 @@ import noResult from "images/no-result.png";
 const NoResult = () => (
     <div className="no-result">
         <span>
-            Sorry&#44; no results found for this search!
+            Sorry&#44; no results<b> found for this search</b>!
             <span role="img" aria-label="disappointed_relieved">
                 😢
             </span>
