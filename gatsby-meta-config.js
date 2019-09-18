@@ -17,5 +17,5 @@ module.exports = {
         `development`,
         `emoji`
     ],
-    ga: ``
+    ga: `UA-148212788-1`
 };
