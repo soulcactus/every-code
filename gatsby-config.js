@@ -50,6 +50,17 @@ module.exports = {
                 images: path.join(__dirname, `src/images`),
                 hooks: path.join(__dirname, `src/hooks`)
             }
+        },
+        {
+            resolve: `gatsby-plugin-robots-txt`,
+            options: {
+                resolveEnv: () => NETLIFY_ENV,
+                env: {
+                    production: {
+                        policy: [{ userAgent: `*` }]
+                    }
+                }
+            }
         }
     ]
 };
