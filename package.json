@@ -1,7 +1,7 @@
 {
   "name": "every-code",
   "private": true,
-  "description": "website : HTML Currency Symbol and Character Codes for Markup Developers made with GatsbyJS",
+  "description": "👽 website : HTML Currency Symbol and Character Codes for Markup Developers made with GatsbyJS",
   "version": "0.1.0",
   "author": "Soulcactus <sunhyejin@mensakorea.org>",
   "dependencies": {
@@ -14,7 +14,6 @@
     "gatsby-plugin-sass": "^2.1.14",
     "gatsby-plugin-sharp": "^2.2.21",
     "gatsby-source-filesystem": "^2.1.22",
-    "gatsby-transformer-csv": "^2.1.7",
     "gatsby-transformer-sharp": "^2.2.14",
     "node-sass": "^4.12.0",
     "prop-types": "^15.7.2",
