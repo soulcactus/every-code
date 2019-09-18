@@ -1,5 +1,7 @@
 @import "src/styles/modules.scss";
 
 .code-container {
+    width: calc(100% + 1rem);
     @include flex-start;
+    margin-left: -1rem;
 }

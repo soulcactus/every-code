@@ -2,18 +2,32 @@
 @import "src/styles/variables.scss";
 
 .code-item {
-    flex-basis: calc((100% - 5rem) / 6);
+    flex-basis: calc((100% - 6rem) / 6);
     position: relative;
-    margin: 0 1rem 1rem 0;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
     @include border($bright-gray);
     border-radius: 1rem;
     padding-bottom: 0.6rem;
     background: white;
     text-align: center;
     box-shadow: 0 0 0.5rem rgba($bright-gray, 0.5);
+    transition: flex-basis 200ms linear;
 
-    &:nth-child(6n) {
-        margin-right: 0;
+    @include for-size(tablet-landscape) {
+        flex-basis: calc((100% - 5rem) / 5);
+    }
+
+    @include for-size(tablet-portrait) {
+        flex-basis: calc((100% - 4rem) / 4);
+    }
+
+    @include for-size(mobile-landscape) {
+        flex-basis: calc((100% - 3rem) / 3);
+    }
+
+    @include for-size(mobile-portrait) {
+        flex-basis: calc((100% - 2rem) / 2);
     }
 
     > div {

@@ -1,8 +1,9 @@
+@import "src/styles/modules.scss";
 @import "src/styles/variables.scss";
 
 .no-result {
     width: 100%;
-    margin-top: 1.5rem;
+    margin-top: 1.1rem;
     text-align: center;
 
     > span {
@@ -10,9 +11,25 @@
         font-size: 3rem;
         font-weight: bold;
         color: $brand-text;
+        transition: font-size 200ms linear;
+
+        @include for-size(mobile-landscape) {
+            font-size: 2.5rem;
+        }
+    }
+
+    b {
+        @include for-size(mobile-portrait) {
+            display: none;
+        }
     }
 
     img {
         width: 40rem;
+        transition: width 200ms linear;
+
+        @include for-size(mobile-landscape) {
+            width: 56%;
+        }
     }
 }

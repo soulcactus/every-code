@@ -27,6 +27,14 @@ a {
 .content-wrap {
     max-width: 96rem;
     margin: 0 auto;
+
+    @include for-size(tablet-landscape) {
+        width: 94%;
+    }
+
+    @include for-size(mobile-portrait) {
+        min-width: 32.5rem;
+    }
 }
 
 input[type="search"] {
@@ -41,5 +49,11 @@ footer {
     padding: 1.5rem;
     text-align: center;
     font-weight: bold;
-    color: $brand-text;
+    color: $dark-gray;
+    transition: font-size 200ms linear;
+
+    @include for-size(mobile-portrait) {
+        min-width: 32.5rem;
+        font-size: 1.4rem;
+    }
 }

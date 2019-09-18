@@ -2,9 +2,21 @@
 @import "src/styles/variables.scss";
 
 .category {
+    margin-bottom: 2.9rem;
+
     ul {
-        @include flex-start;
-        margin-bottom: 3rem;
+        height: 15rem;
+        @include space-between;
+        align-items: stretch;
+
+        @include for-size(tablet-portrait) {
+            overflow-y: scroll;
+            -ms-overflow-style: none;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
     }
 
     li {
@@ -19,6 +31,12 @@
         font-size: 1.4rem;
         color: $brand-text;
         @include pointer;
+        transition: flex-basis 200ms linear, font-size 200ms linear;
+
+        @include for-size(tablet-portrait) {
+            flex-basis: calc(100% / 3);
+            font-size: 1.2rem;
+        }
 
         &.selected {
             border-color: $brand;

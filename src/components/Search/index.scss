@@ -11,6 +11,12 @@
     font-size: 1.8rem;
     box-sizing: border-box;
     color: $brand-text;
+    transition: padding 200ms linear, font-size 200ms linear;
+
+    @include for-size(mobile-portrait) {
+        padding: 1.25rem;
+        font-size: 1.6rem;
+    }
 
     &::placeholder {
         color: $gray;

@@ -11,24 +11,52 @@ header {
     font-size: 2rem;
     color: $white;
     z-index: 10;
+    transition: padding 200ms linear;
+
+    @include for-size(mobile-portrait) {
+        padding: 1.75rem 0;
+    }
 
     > div {
-        @include space-between;
+        @include space-between(nowrap);
         max-width: 96rem;
         margin: 0 auto;
+
+        @include for-size(tablet-landscape) {
+            width: 93.5%;
+        }
+
+        @include for-size(mobile-portrait) {
+            min-width: 32.5rem;
+        }
     }
 }
 
 .logo {
     width: 15rem;
     margin-top: 0.1rem;
+    transition: width 200ms linear;
+
+    @include for-size(mobile-portrait) {
+        width: 12rem;
+    }
 }
 
 .github {
     width: 3rem;
+    transition: width 200ms linear;
+
+    @include for-size(mobile-portrait) {
+        width: 2.5rem;
+    }
 }
 
-.buy-coffee {
+.buy-me-a-coffee {
     width: 15.1rem;
     margin-left: 1.2rem;
+    transition: width 200ms linear;
+
+    @include for-size(mobile-portrait) {
+        width: 12rem;
+    }
 }

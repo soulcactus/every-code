@@ -3,12 +3,28 @@
 
 .switch-wrap {
     height: 2.8rem;
+    @include space-between(nowrap);
     margin-top: 9.3rem;
     position: relative;
 
+    @include for-size(mobile-portrait) {
+        margin-top: 8.6rem;
+    }
+
+    p {
+        margin-top: 0.6rem;
+        font-weight: bold;
+        color: $brand-text;
+        transition: font-size 200ms linear;
+
+        @include for-size(mobile-landscape) {
+            display: none;
+        }
+    }
+
     div {
-        width: 8.3rem;
-        @include space-between;
+        width: 8.1rem;
+        @include space-between(nowrap);
         position: absolute;
         right: 0;
     }
