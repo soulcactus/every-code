@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { graphql } from "gatsby";
 
-import SEO from "components/seo";
+import Head from "components/Head";
 import Layout from "components/Layout";
 import Message from "components/Message";
 import SwitchBookmark from "components/SwitchBookmark";
@@ -36,11 +36,13 @@ export const data = graphql`
 `;
 
 const IndexPage = ({ data }) => {
-    const storage = typeof window !== `undefined` ? window.localStorage : null;
+    const localStorage =
+        typeof window !== `undefined` ? window.localStorage : null;
     const edges = data.allCode.edges;
     const initialCodeList = edges.slice(0, 60);
-    const [searchValue, setSearchValue] = useState("");
-    const [categoryIdx, setCategoryIdx] = useState(0);
+    const [switchState, setSwitchState] = useState(false);
+    const [searchValue, setSearchValue] = useState(``);
+    const [categoryIndex, setcategoryIndex] = useState(0);
     const [codeList, setCodeList] = useState(initialCodeList);
     const [bookmarkState, setbookmarkState] = useState(false);
     const [bookmarkList, setbookmarkList] = useState([]);
@@ -52,24 +54,30 @@ const IndexPage = ({ data }) => {
         ((window.scrollY + window.innerHeight) / document.body.clientHeight) *
         100;
 
+    const handleSwitch = (e) => {
+        e.target.checked ? setSwitchState(true) : setSwitchState(false);
+    };
+
     const handleSearch = (e) => {
         setSearchValue(e.target.value);
     };
 
-    const handleCategory = (idx) => {
-        setCategoryIdx(idx);
+    const handleCategory = (index) => {
+        setcategoryIndex(index);
     };
 
     const handleBookmark = (node) => {
-        const id = node.id;
-        const overlapCode = bookmarkList.filter((item) => id === item.node.id);
+        const nodeId = node.id;
+        const overlapCode = bookmarkList.filter(
+            (item) => nodeId === item.node.id
+        );
 
         const removeRestCodes = bookmarkList.filter(
-            (item) => id !== item.node.id
+            (item) => nodeId !== item.node.id
         );
 
         if (overlapCode.length === 0) {
-            storage.setItem(id, JSON.stringify(node));
+            localStorage.setItem(nodeId, JSON.stringify(node));
             setbookmarkList([...bookmarkList, { node }]);
             setbookmarkState(true);
 
@@ -77,7 +85,7 @@ const IndexPage = ({ data }) => {
                 setbookmarkState(false);
             }, 500);
         } else {
-            storage.removeItem(id);
+            localStorage.removeItem(nodeId);
             setbookmarkList(removeRestCodes);
         }
     };
@@ -106,14 +114,14 @@ const IndexPage = ({ data }) => {
 
     useEffect(() => {
         const initialCodeList = edges.slice(0, 60);
-        const id = bookmarkList.map((item) => item.node.id);
-        const listLen = list.current.length;
-        const searchLen = searchValue.length;
-        const bookmarkLen = bookmarkList.length;
+        const bookmarkIdList = bookmarkList.map((item) => item.node.id);
+        const listLength = list.current.length;
+        const searchLength = searchValue.length;
+        const bookmarkLength = bookmarkList.length;
 
         const expression = () =>
-            listLen <= 1 ||
-            (listLen - searchLen > 1 && listLen - searchLen <= 60);
+            listLength <= 1 ||
+            (listLength - searchLength > 1 && listLength - searchLength <= 60);
 
         const categoryList = [
             `Standard`,
@@ -137,27 +145,30 @@ const IndexPage = ({ data }) => {
 
         let bookmarkRestCodes;
 
-        if (searchLen !== 0) {
+        if (searchLength !== 0) {
             const searchCodes = edges.filter((item) =>
                 searchValue.includes(item.node.char)
             );
 
             setCodeList(searchCodes);
         } else {
-            if (categoryIdx === 0) {
+            if (categoryIndex === 0) {
                 const filter = edges.filter(
-                    (item) => !id.includes(item.node.id)
+                    (item) => !bookmarkIdList.includes(item.node.id)
                 );
 
                 setCodeList(initialCodeList);
 
-                if (bookmarkLen !== 0) {
+                if (bookmarkLength !== 0) {
                     if (expression()) {
-                        bookmarkRestCodes = filter.slice(0, 60 - bookmarkLen);
+                        bookmarkRestCodes = filter.slice(
+                            0,
+                            60 - bookmarkLength
+                        );
                     } else {
                         bookmarkRestCodes = filter.slice(
                             0,
-                            listLen - bookmarkLen
+                            listLength - bookmarkLength
                         );
                     }
                 }
@@ -169,10 +180,10 @@ const IndexPage = ({ data }) => {
                 const filter = edges.filter(
                     (item) =>
                         item.node.category === categoryList[i] &&
-                        !id.includes(item.node.id)
+                        !bookmarkIdList.includes(item.node.id)
                 );
 
-                if (categoryIdx === i + 1) {
+                if (categoryIndex === i + 1) {
                     setCodeList(
                         edges
                             .filter(
@@ -183,52 +194,60 @@ const IndexPage = ({ data }) => {
 
                     codes.current = filter;
 
-                    if (bookmarkLen !== 0) {
+                    if (bookmarkLength !== 0) {
                         if (expression()) {
                             bookmarkRestCodes = filter.slice(
                                 0,
-                                60 - bookmarkLen
+                                60 - bookmarkLength
                             );
                         } else {
                             bookmarkRestCodes = filter.slice(
                                 0,
-                                listLen - bookmarkLen
+                                listLength - bookmarkLength
                             );
                         }
                     }
                 }
             }
 
-            if (bookmarkLen !== 0) {
-                setCodeList([...bookmarkList, ...bookmarkRestCodes]);
+            if (bookmarkLength !== 0) {
+                if (switchState) {
+                    setCodeList(bookmarkList);
+                } else {
+                    setCodeList([...bookmarkList, ...bookmarkRestCodes]);
+                }
             }
         }
-    }, [edges, bookmarkList, searchValue, categoryIdx]);
+    }, [edges, switchState, bookmarkList, searchValue, categoryIndex]);
 
     useEffect(() => {
+        const searchLength = searchValue.length;
+
         setCodeList((allCode) => allCode.slice(0, 60));
 
         const handleScroll = () => {
             if (getCurrentScrollPercentage() > 90) {
-                setCodeList((prevCodes) => {
-                    let addList = prevCodes.length + 60;
+                setCodeList((previousCodes) => {
+                    let addList = previousCodes.length + 60;
 
                     return [
-                        ...prevCodes,
-                        ...codes.current.slice(prevCodes.length, addList)
+                        ...previousCodes,
+                        ...codes.current.slice(previousCodes.length, addList)
                     ];
                 });
             }
         };
 
-        window.addEventListener(`scroll`, handleScroll, false);
-        return () => window.removeEventListener(`scroll`, handleScroll);
-    }, [categoryIdx]);
+        if (searchLength === 0 && !switchState) {
+            window.addEventListener(`scroll`, handleScroll, false);
+            return () => window.removeEventListener(`scroll`, handleScroll);
+        }
+    }, [searchValue, categoryIndex, switchState]);
 
     useEffect(() => {
         let bookmark = [];
 
-        for (const [key, value] of Object.entries(storage)) {
+        for (const [key, value] of Object.entries(localStorage)) {
             if (!isNaN(Number(key))) {
                 const node = JSON.parse(value);
 
@@ -237,26 +256,26 @@ const IndexPage = ({ data }) => {
         }
 
         setbookmarkList(bookmark);
-    }, [storage]);
+    }, [localStorage]);
 
     return (
         <Layout>
-            <SEO title="Home" />
+            <Head title="main" />
             {copyState && <Message message={`Copied to Clipboard! 😊`} />}
             {bookmarkState && (
                 <Message message={`Added to the bookmark! ⭐️`} />
             )}
-            <SwitchBookmark />
+            <SwitchBookmark handleSwitch={handleSwitch} />
             <Search handleSearch={handleSearch} />
             {!searchValue && (
                 <Category
                     handleCategory={handleCategory}
-                    categoryIdx={categoryIdx}
+                    categoryIndex={categoryIndex}
                 />
             )}
             <CodeContainer>
                 {codeList.length !== 0 ? (
-                    codeList.map(({ node }, idx) => (
+                    codeList.map(({ node }, index) => (
                         <CodeItem
                             node={node}
                             handleCopy={handleCopy}
@@ -264,7 +283,7 @@ const IndexPage = ({ data }) => {
                             key={node.id}
                         >
                             {!searchValue ? (
-                                idx < bookmarkList.length ? (
+                                index < bookmarkList.length ? (
                                     <img src={marked} alt="marked" />
                                 ) : (
                                     <img src={unmarked} alt="unmarked" />

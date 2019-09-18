@@ -1,21 +1,30 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import "./index.scss";
 
-const SwitchBookmark = () => {
+const SwitchBookmark = ({ handleSwitch }) => {
     return (
         <div className="switch-wrap">
-            <div title="Bookmark only">
+            <p>
+                ⚠ WARNING&#33; Removing the browser cache will also remove your
+                bookmarks&#46;
+            </p>
+            <div title="Only bookmarks">
                 <span role="img" aria-label="star">
                     ⭐
                 </span>
                 <label>
-                    <input type="checkbox" />
+                    <input type="checkbox" onChange={handleSwitch} />
                     <span></span>
                 </label>
             </div>
         </div>
     );
+};
+
+SwitchBookmark.propTypes = {
+    handleSwitch: PropTypes.func.isRequired
 };
 
 export default SwitchBookmark;
