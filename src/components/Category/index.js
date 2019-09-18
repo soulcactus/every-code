@@ -1,8 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import "./index.scss";
 
-const Category = ({ handleCategory, categoryIdx }) => {
+const Category = ({ handleCategory, categoryIndex }) => {
     const categoryList = [
         `ALL`,
         `Standard`,
@@ -27,17 +28,17 @@ const Category = ({ handleCategory, categoryIdx }) => {
     return (
         <div className="category">
             <ul>
-                {categoryList.map((item, idx) =>
-                    categoryIdx === idx ? (
+                {categoryList.map((item, index) =>
+                    categoryIndex === index ? (
                         <li
                             className="selected"
-                            onClick={() => handleCategory(idx)}
-                            key={idx}
+                            onClick={() => handleCategory(index)}
+                            key={index}
                         >
                             <span>{item}</span>
                         </li>
                     ) : (
-                        <li onClick={() => handleCategory(idx)} key={idx}>
+                        <li onClick={() => handleCategory(index)} key={index}>
                             <span>{item}</span>
                         </li>
                     )
@@ -45,6 +46,11 @@ const Category = ({ handleCategory, categoryIdx }) => {
             </ul>
         </div>
     );
+};
+
+Category.propTypes = {
+    handleCategory: PropTypes.func.isRequired,
+    categoryIndex: PropTypes.number.isRequired
 };
 
 export default Category;
