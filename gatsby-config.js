@@ -2,7 +2,7 @@ const metaConfig = require("./gatsby-meta-config");
 const path = require("path");
 const {
     NODE_ENV,
-    URL: NETLIFY_SITE_URL = "https://www.example.com",
+    URL: NETLIFY_SITE_URL = "https://everycode.store",
     DEPLOY_PRIME_URL: NETLIFY_DEPLOY_URL = NETLIFY_SITE_URL,
     CONTEXT: NETLIFY_ENV = NODE_ENV
 } = process.env;
