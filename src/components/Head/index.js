@@ -32,7 +32,7 @@ const Head = ({ description, lang, meta, keywords, title }) => {
                         meta={[
                             {
                                 name: `description`,
-                                content: metaDescription
+                                content: data.site.siteMetadata.description
                             },
                             {
                                 property: `og:title`,
@@ -44,7 +44,7 @@ const Head = ({ description, lang, meta, keywords, title }) => {
                             },
                             {
                                 property: `og:description`,
-                                content: metaDescription
+                                content: data.site.siteMetadata.description
                             },
                             {
                                 property: `og:type`,
