@@ -17,6 +17,5 @@ module.exports = {
         `markup development`,
         `development`,
         `emoji`
-    ],
-    ga: `UA-148212788-1`
+    ]
 };
