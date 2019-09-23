@@ -10,6 +10,8 @@ const detailsQuery = graphql`
                 title
                 description
                 author
+                image
+                keywords
             }
         }
     }
@@ -22,6 +24,7 @@ const Head = ({ description, lang, meta, keywords, title }) => {
             render={(data) => {
                 const metaDescription =
                     description || data.site.siteMetadata.description;
+
                 return (
                     <Helmet
                         htmlAttributes={{
@@ -32,11 +35,11 @@ const Head = ({ description, lang, meta, keywords, title }) => {
                         meta={[
                             {
                                 name: `description`,
-                                content: data.site.siteMetadata.description
+                                content: metaDescription
                             },
                             {
                                 property: `og:title`,
-                                content: title
+                                content: data.site.siteMetadata.title
                             },
                             {
                                 property: `og:image`,
@@ -44,50 +47,29 @@ const Head = ({ description, lang, meta, keywords, title }) => {
                             },
                             {
                                 property: `og:description`,
-                                content: data.site.siteMetadata.description
+                                content: metaDescription
                             },
                             {
                                 property: `og:type`,
                                 content: `website`
                             },
                             {
-                                name: `twitter:card`,
-                                content: `summary`
-                            },
-                            {
-                                name: `twitter:creator`,
-                                content: data.site.siteMetadata.author
-                            },
-                            {
-                                name: `twitter:title`,
-                                content: title
-                            },
-                            {
-                                name: `twitter:description`,
-                                content: metaDescription
+                                name: `google-site-verification`,
+                                content: `CuSkWObnLIgbk3n4J-eSJiQ6w1pt-MtfZYo3s2dOHaI`
                             }
                         ]
                             .concat(
-                                keywords.length > 0
+                                data.site.siteMetadata.keywords.length > 0
                                     ? {
                                           name: `keywords`,
-                                          content: keywords.join(`, `)
+                                          content: data.site.siteMetadata.keywords.join(
+                                              `, `
+                                          )
                                       }
                                     : []
                             )
                             .concat(meta)}
-                    >
-                        <meta charSet="utf-8" />
-                        <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-                        <meta
-                            name="viewport"
-                            content="width=device-width, initial-scale=1, shrink-to-fit=no, minimum-scale=1, maximum-scale=2"
-                        />
-                        <meta
-                            name="google-site-verification"
-                            content="CuSkWObnLIgbk3n4J-eSJiQ6w1pt-MtfZYo3s2dOHaI"
-                        />
-                    </Helmet>
+                    />
                 );
             }}
         />
