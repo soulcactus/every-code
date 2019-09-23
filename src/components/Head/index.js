@@ -10,6 +10,7 @@ const detailsQuery = graphql`
                 title
                 description
                 author
+                siteUrl
                 image
                 keywords
             }
@@ -17,13 +18,12 @@ const detailsQuery = graphql`
     }
 `;
 
-const Head = ({ description, lang, meta, keywords, title }) => {
+const Head = ({ lang, meta, title }) => {
     return (
         <StaticQuery
             query={detailsQuery}
             render={(data) => {
-                const metaDescription =
-                    description || data.site.siteMetadata.description;
+                const metaDescription = data.site.siteMetadata.description;
 
                 return (
                     <Helmet
@@ -43,7 +43,7 @@ const Head = ({ description, lang, meta, keywords, title }) => {
                             },
                             {
                                 property: `og:image`,
-                                content: data.site.siteMetadata.image
+                                content: `${data.site.siteMetadata.siteUrl}${data.site.siteMetadata.image}`
                             },
                             {
                                 property: `og:description`,
@@ -78,15 +78,12 @@ const Head = ({ description, lang, meta, keywords, title }) => {
 
 Head.defaultProps = {
     lang: `en`,
-    meta: [],
-    keywords: []
+    meta: []
 };
 
 Head.propTypes = {
-    description: PropTypes.string,
     lang: PropTypes.string,
     meta: PropTypes.array,
-    keywords: PropTypes.arrayOf(PropTypes.string),
     title: PropTypes.string.isRequired
 };
 
