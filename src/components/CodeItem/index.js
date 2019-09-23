@@ -13,15 +13,15 @@ const CodeItem = ({ node, handleCopy, handleBookmark, children }) => {
 
     return (
         <div className="code-item" key={node.id}>
-            <div title={node.name}>
+            <div title={node.name} onClick={() => handleCopy(node.char)}>
                 <div
                     className="bookmark"
                     title="bookmark"
-                    onClick={() => handleBookmark(node)}
+                    onClick={(e) => handleBookmark(e, node)}
                 >
                     {children}
                 </div>
-                <span onClick={() => handleCopy(node.char)}>{node.char}</span>
+                <span>{node.char}</span>
             </div>
             <ul>
                 {node.htmlEntity && codeList(node.htmlEntity, `HTML Entity`)}

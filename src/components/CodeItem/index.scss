@@ -40,6 +40,7 @@
         border-top-right-radius: 1rem;
         padding: 1.5rem 0 1.8rem;
         background: $brand;
+        @include pointer;
 
         span {
             height: 4rem;
@@ -47,7 +48,6 @@
             font-weight: bold;
             color: $white;
             margin: 0;
-            @include pointer;
         }
     }
 

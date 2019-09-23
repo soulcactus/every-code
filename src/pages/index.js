@@ -66,7 +66,7 @@ const IndexPage = ({ data }) => {
         setcategoryIndex(index);
     };
 
-    const handleBookmark = (node) => {
+    const handleBookmark = (e, node) => {
         const nodeId = node.id;
         const overlapCode = bookmarkList.filter(
             (item) => nodeId === item.node.id
@@ -75,6 +75,8 @@ const IndexPage = ({ data }) => {
         const removeRestCodes = bookmarkList.filter(
             (item) => nodeId !== item.node.id
         );
+
+        e.stopPropagation();
 
         if (overlapCode.length === 0) {
             localStorage.setItem(nodeId, JSON.stringify(node));
