@@ -1,9 +1,10 @@
 module.exports = {
     title: `EveryCode`,
-    description: `HTML Currency Symbol and Character Codes for Markup Developers. 👽`,
+    description: `HTML entity, Emoji, HTML Currency Symbol and Character Codes for Markup Developers. 👽`,
     author: `Soulcactus`,
     siteUrl: `https://everycode.store`,
     icon: `src/images/favicon.png`,
+    image: `src/images/og.png`,
     keywords: [
         `HTML`,
         `HTML symbol`,

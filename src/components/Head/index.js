@@ -28,7 +28,7 @@ const Head = ({ description, lang, meta, keywords, title }) => {
                             lang
                         }}
                         title={title}
-                        titleTemplate={`%s | ${data.site.siteMetadata.title}`}
+                        titleTemplate={`${data.site.siteMetadata.title}`}
                         meta={[
                             {
                                 name: `description`,
@@ -37,6 +37,10 @@ const Head = ({ description, lang, meta, keywords, title }) => {
                             {
                                 property: `og:title`,
                                 content: title
+                            },
+                            {
+                                property: `og:image`,
+                                content: data.site.siteMetadata.image
                             },
                             {
                                 property: `og:description`,
