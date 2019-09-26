@@ -1,5 +1,5 @@
 module.exports = {
-    title: `👽 EveryCode`,
+    title: `EveryCode`,
     description: `HTML Entity, Emoji, HTML Currency Symbol and Character Codes for Markup Developers.`,
     author: `Soulcactus`,
     siteUrl: `https://everycode.store`,
