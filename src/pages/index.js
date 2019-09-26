@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useReducer, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { graphql } from "gatsby";
 
@@ -35,18 +35,54 @@ export const data = graphql`
     }
 `;
 
+const reducer = (state, action) => {
+    switch (action.type) {
+        case `switch`: {
+            return { ...state, switchState: action.switch };
+        }
+
+        case `search`: {
+            return { ...state, searchValue: action.search };
+        }
+
+        case `category`: {
+            return { ...state, categoryIndex: action.category };
+        }
+
+        case `bookmark`: {
+            return { ...state, bookmarkState: action.bookmark };
+        }
+
+        case `bookmarkList`: {
+            return { ...state, bookmarkList: action.bookmarkList };
+        }
+
+        case `copy`: {
+            return { ...state, copyState: action.copy };
+        }
+
+        default: {
+            throw new Error(`unexpected action.type: ${action.type}`);
+        }
+    }
+};
+
+const initialState = {
+    switchState: false,
+    searchValue: ``,
+    categoryIndex: 0,
+    bookmarkState: false,
+    bookmarkList: [],
+    copyState: false
+};
+
 const IndexPage = ({ data }) => {
     const localStorage =
         typeof window !== `undefined` ? window.localStorage : null;
     const edges = data.allCode.edges;
     const initialCodeList = edges.slice(0, 60);
-    const [switchState, setSwitchState] = useState(false);
-    const [searchValue, setSearchValue] = useState(``);
-    const [categoryIndex, setcategoryIndex] = useState(0);
     const [codeList, setCodeList] = useState(initialCodeList);
-    const [bookmarkState, setbookmarkState] = useState(false);
-    const [bookmarkList, setbookmarkList] = useState([]);
-    const [copyState, setCopyState] = useState(false);
+    const [states, dispatch] = useReducer(reducer, initialState);
     const list = useRef(codeList);
     let codes = useRef(null);
 
@@ -55,24 +91,26 @@ const IndexPage = ({ data }) => {
         100;
 
     const handleSwitch = (e) => {
-        e.target.checked ? setSwitchState(true) : setSwitchState(false);
+        e.target.checked
+            ? dispatch({ type: `switch`, switch: true })
+            : dispatch({ type: `switch`, switch: false });
     };
 
     const handleSearch = (e) => {
-        setSearchValue(e.target.value);
+        dispatch({ type: `search`, search: e.target.value });
     };
 
     const handleCategory = (index) => {
-        setcategoryIndex(index);
+        dispatch({ type: `category`, category: index });
     };
 
     const handleBookmark = (e, node) => {
         const nodeId = node.id;
-        const overlapCode = bookmarkList.filter(
+        const overlapCode = states.bookmarkList.filter(
             (item) => nodeId === item.node.id
         );
 
-        const removeRestCodes = bookmarkList.filter(
+        const removeRestCodes = states.bookmarkList.filter(
             (item) => nodeId !== item.node.id
         );
 
@@ -80,15 +118,20 @@ const IndexPage = ({ data }) => {
 
         if (overlapCode.length === 0) {
             localStorage.setItem(nodeId, JSON.stringify(node));
-            setbookmarkList([...bookmarkList, { node }]);
-            setbookmarkState(true);
+
+            dispatch({
+                type: `bookmarkList`,
+                bookmarkList: [...states.bookmarkList, { node }]
+            });
+
+            dispatch({ type: `bookmark`, bookmark: true });
 
             setTimeout(() => {
-                setbookmarkState(false);
+                dispatch({ type: `bookmark`, bookmark: false });
             }, 500);
         } else {
             localStorage.removeItem(nodeId);
-            setbookmarkList(removeRestCodes);
+            dispatch({ type: `bookmarkList`, bookmarkList: removeRestCodes });
         }
     };
 
@@ -101,10 +144,10 @@ const IndexPage = ({ data }) => {
         dummy.select();
         document.execCommand(`copy`);
         body.removeChild(dummy);
-        setCopyState(true);
+        dispatch({ type: `copy`, copy: true });
 
         setTimeout(() => {
-            setCopyState(false);
+            dispatch({ type: `copy`, copy: false });
         }, 500);
     };
 
@@ -116,10 +159,10 @@ const IndexPage = ({ data }) => {
 
     useEffect(() => {
         const initialCodeList = edges.slice(0, 60);
-        const bookmarkIdList = bookmarkList.map((item) => item.node.id);
+        const bookmarkIdList = states.bookmarkList.map((item) => item.node.id);
         const listLength = list.current.length;
-        const searchLength = searchValue.length;
-        const bookmarkLength = bookmarkList.length;
+        const searchLength = states.searchValue.length;
+        const bookmarkLength = states.bookmarkList.length;
 
         const expression = () =>
             listLength <= 1 ||
@@ -149,12 +192,12 @@ const IndexPage = ({ data }) => {
 
         if (searchLength !== 0) {
             const searchCodes = edges.filter((item) =>
-                searchValue.includes(item.node.char)
+                states.searchValue.includes(item.node.char)
             );
 
             setCodeList(searchCodes);
         } else {
-            if (categoryIndex === 0) {
+            if (states.categoryIndex === 0) {
                 const filter = edges.filter(
                     (item) => !bookmarkIdList.includes(item.node.id)
                 );
@@ -185,7 +228,7 @@ const IndexPage = ({ data }) => {
                         !bookmarkIdList.includes(item.node.id)
                 );
 
-                if (categoryIndex === i + 1) {
+                if (states.categoryIndex === i + 1) {
                     setCodeList(
                         edges
                             .filter(
@@ -213,17 +256,17 @@ const IndexPage = ({ data }) => {
             }
 
             if (bookmarkLength !== 0) {
-                if (switchState) {
-                    setCodeList(bookmarkList);
+                if (states.switchState) {
+                    setCodeList(states.bookmarkList);
                 } else {
-                    setCodeList([...bookmarkList, ...bookmarkRestCodes]);
+                    setCodeList([...states.bookmarkList, ...bookmarkRestCodes]);
                 }
             }
         }
-    }, [edges, switchState, bookmarkList, searchValue, categoryIndex]);
+    }, [edges, states]);
 
     useEffect(() => {
-        const searchLength = searchValue.length;
+        const searchLength = states.searchValue.length;
 
         setCodeList((allCode) => allCode.slice(0, 60));
 
@@ -240,11 +283,11 @@ const IndexPage = ({ data }) => {
             }
         };
 
-        if (searchLength === 0 && !switchState) {
+        if (searchLength === 0 && !states.switchState) {
             window.addEventListener(`scroll`, handleScroll, false);
             return () => window.removeEventListener(`scroll`, handleScroll);
         }
-    }, [searchValue, categoryIndex, switchState]);
+    }, [states]);
 
     useEffect(() => {
         let bookmark = [];
@@ -257,22 +300,24 @@ const IndexPage = ({ data }) => {
             }
         }
 
-        setbookmarkList(bookmark);
+        dispatch({ type: `bookmarkList`, bookmarkList: bookmark });
     }, [localStorage]);
 
     return (
         <Layout>
             <Head title="main" />
-            {copyState && <Message message={`Copied to Clipboard! 😊`} />}
-            {bookmarkState && (
+            {states.copyState && (
+                <Message message={`Copied to Clipboard! 😊`} />
+            )}
+            {states.bookmarkState && (
                 <Message message={`Added to the bookmark! ⭐️`} />
             )}
             <SwitchBookmark handleSwitch={handleSwitch} />
             <Search handleSearch={handleSearch} />
-            {!searchValue && (
+            {!states.searchValue && (
                 <Category
                     handleCategory={handleCategory}
-                    categoryIndex={categoryIndex}
+                    categoryIndex={states.categoryIndex}
                 />
             )}
             <CodeContainer>
@@ -284,13 +329,13 @@ const IndexPage = ({ data }) => {
                             handleBookmark={handleBookmark}
                             key={node.id}
                         >
-                            {!searchValue ? (
-                                index < bookmarkList.length ? (
+                            {!states.searchValue ? (
+                                index < states.bookmarkList.length ? (
                                     <img src={marked} alt="marked" />
                                 ) : (
                                     <img src={unmarked} alt="unmarked" />
                                 )
-                            ) : bookmarkList
+                            ) : states.bookmarkList
                                   .map((item) => item.node.id)
                                   .includes(node.id) ? (
                                 <img src={marked} alt="marked" />
