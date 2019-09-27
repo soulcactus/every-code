@@ -91,9 +91,16 @@ const IndexPage = ({ data }) => {
         100;
 
     const handleSwitch = (e) => {
-        e.target.checked
-            ? dispatch({ type: `switch`, switch: true })
-            : dispatch({ type: `switch`, switch: false });
+        if (e.target.checked) {
+            if (states.bookmarkList.length !== 0) {
+                dispatch({ type: `switch`, switch: true });
+            } else {
+                e.preventDefault();
+                e.target.checked = false;
+            }
+        } else {
+            dispatch({ type: `switch`, switch: false });
+        }
     };
 
     const handleSearch = (e) => {
