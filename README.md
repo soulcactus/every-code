@@ -14,3 +14,11 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/soulcactus/every-code)
 
 👽 website : HTML Entity, Emoji, HTML Currency Symbol and Character Codes for Markup Developers made with GatsbyJS
+
+## 🧐 What's inside?
+
+-   ✨ HTML Code, Hex Code, Css Code, HTML Entity
+-   😎 Emoji
+-   📝 Copy to Clipboard
+-   ⭐ Add to Bookmark
+-   👉 Search Characters
