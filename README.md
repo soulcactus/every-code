@@ -13,7 +13,7 @@
 ![GitHub](https://img.shields.io/github/license/soulcactus/every-code)
 ![GitHub last commit](https://img.shields.io/github/last-commit/soulcactus/every-code)
 
-👽 website : HTML Entity, Emoji, HTML Currency Symbol and Character Codes for Markup Developers made with GatsbyJS
+website : HTML Entity, Emoji, HTML Currency Symbol and Character Codes for Markup Developers made with GatsbyJS
 
 ## 🧐 What's inside?
 
