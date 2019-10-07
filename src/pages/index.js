@@ -270,7 +270,13 @@ const IndexPage = ({ data }) => {
                 }
             }
         }
-    }, [edges, states]);
+    }, [
+        edges,
+        states.switchState,
+        states.bookmarkList,
+        states.searchValue,
+        states.categoryIndex
+    ]);
 
     useEffect(() => {
         const searchLength = states.searchValue.length;
@@ -294,7 +300,7 @@ const IndexPage = ({ data }) => {
             window.addEventListener(`scroll`, handleScroll, false);
             return () => window.removeEventListener(`scroll`, handleScroll);
         }
-    }, [states]);
+    }, [states.searchValue, states.categoryIndex, states.switchState]);
 
     useEffect(() => {
         let bookmark = [];
