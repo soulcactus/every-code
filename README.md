@@ -46,4 +46,4 @@ $ npm start
 
 ## 🏡 Please visit now!
 
--   [everycode.store](https://everycode.store/)
+[everycode.store](https://everycode.store/)
