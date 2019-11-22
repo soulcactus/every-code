@@ -5,7 +5,7 @@ import { useStaticQuery, graphql } from "gatsby";
 import "./index.scss";
 import Header from "components/Header";
 
-const Layout = ({ children }) => {
+function Layout({ children }) {
     const data = useStaticQuery(graphql`
         query SiteTitleQuery {
             site {
@@ -27,7 +27,7 @@ const Layout = ({ children }) => {
             </footer>
         </>
     );
-};
+}
 
 Layout.propTypes = {
     children: PropTypes.node.isRequired

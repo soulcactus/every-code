@@ -5,7 +5,7 @@ import "./index.scss";
 
 import goTop from "images/go-top.svg";
 
-const GoTop = ({ handleScrollTop }) => {
+function GoTop({ handleScrollTop }) {
     const scrollTop = () => {
         let scrollY = window.scrollY;
         let scrollSpeed = scrollY / 2;
@@ -25,7 +25,7 @@ const GoTop = ({ handleScrollTop }) => {
             <img src={goTop} alt="go top" />
         </button>
     );
-};
+}
 
 GoTop.propTypes = {
     handleScrollTop: PropTypes.func.isRequired

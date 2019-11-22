@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import "./index.scss";
 
-const CodeItem = ({ node, handleCopy, handleBookmark, children }) => {
+function CodeItem({ node, handleCopy, handleBookmark, children }) {
     const codeList = (code, codeType) => (
         <li onClick={() => handleCopy(code)}>
             {code}
@@ -31,7 +31,7 @@ const CodeItem = ({ node, handleCopy, handleBookmark, children }) => {
             </ul>
         </div>
     );
-};
+}
 
 CodeItem.propTypes = {
     node: PropTypes.object.isRequired,

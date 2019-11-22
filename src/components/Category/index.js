@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import "./index.scss";
 
-const Category = ({ handleCategory, categoryIndex }) => {
+function Category({ handleCategory, categoryIndex }) {
     const categoryList = [
         `ALL`,
         `Standard`,
@@ -46,7 +46,7 @@ const Category = ({ handleCategory, categoryIndex }) => {
             </ul>
         </div>
     );
-};
+}
 
 Category.propTypes = {
     handleCategory: PropTypes.func.isRequired,

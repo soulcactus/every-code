@@ -3,13 +3,15 @@ import PropTypes from "prop-types";
 
 import "./index.scss";
 
-const Message = ({ message }) => (
-    <>
-        <div className="message">
-            <span>{message}</span>
-        </div>
-    </>
-);
+function Message({ message }) {
+    return (
+        <>
+            <div className="message">
+                <span>{message}</span>
+            </div>
+        </>
+    );
+}
 
 Message.propTypes = {
     message: PropTypes.string.isRequired

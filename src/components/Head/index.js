@@ -18,7 +18,7 @@ const detailsQuery = graphql`
     }
 `;
 
-const Head = ({ lang, meta, title }) => {
+function Head({ lang, meta, title }) {
     return (
         <>
             <Helmet>
@@ -87,7 +87,7 @@ const Head = ({ lang, meta, title }) => {
             />
         </>
     );
-};
+}
 
 Head.defaultProps = {
     lang: `en`,

@@ -8,35 +8,37 @@ import github from "images/github.svg";
 
 import "./index.scss";
 
-const Header = ({ siteTitle }) => (
-    <header>
-        <div>
-            <Link to="/">
-                <img src={logo} alt={siteTitle} className="logo" />
-            </Link>
+function Header({ siteTitle }) {
+    return (
+        <header>
             <div>
-                <a
-                    href="https://github.com/soulcactus/every-code"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <img src={github} alt="github" className="github" />
-                </a>
-                <a
-                    href="https://www.buymeacoffee.com/soulcactus"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <img
-                        src={buyMeACoffee}
-                        alt="buy me a coffee"
-                        className="buy-me-a-coffee"
-                    />
-                </a>
+                <Link to="/">
+                    <img src={logo} alt={siteTitle} className="logo" />
+                </Link>
+                <div>
+                    <a
+                        href="https://github.com/soulcactus/every-code"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img src={github} alt="github" className="github" />
+                    </a>
+                    <a
+                        href="https://www.buymeacoffee.com/soulcactus"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img
+                            src={buyMeACoffee}
+                            alt="buy me a coffee"
+                            className="buy-me-a-coffee"
+                        />
+                    </a>
+                </div>
             </div>
-        </div>
-    </header>
-);
+        </header>
+    );
+}
 
 Header.propTypes = {
     siteTitle: PropTypes.string

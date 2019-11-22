@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import "./index.scss";
 
-const SwitchBookmark = ({ handleSwitch }) => {
+function SwitchBookmark({ handleSwitch }) {
     return (
         <div className="switch-wrap">
             <p>
@@ -21,7 +21,7 @@ const SwitchBookmark = ({ handleSwitch }) => {
             </div>
         </div>
     );
-};
+}
 
 SwitchBookmark.propTypes = {
     handleSwitch: PropTypes.func.isRequired

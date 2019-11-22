@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect, useRef } from "react";
+import React, { useState, useReducer, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { graphql } from "gatsby";
 
@@ -76,7 +76,7 @@ const initialState = {
     copyState: false
 };
 
-const IndexPage = ({ data }) => {
+function IndexPage({ data }) {
     const localStorage =
         typeof window !== `undefined` ? window.localStorage : null;
     const edges = data.allCode.edges;
@@ -162,9 +162,7 @@ const IndexPage = ({ data }) => {
         setCodeList((allCode) => allCode.slice(0, 60));
     };
 
-    list.current = codeList;
-
-    useEffect(() => {
+    const getList = () => {
         const initialCodeList = edges.slice(0, 60);
         const bookmarkIdList = states.bookmarkList.map((item) => item.node.id);
         const listLength = list.current.length;
@@ -270,15 +268,9 @@ const IndexPage = ({ data }) => {
                 }
             }
         }
-    }, [
-        edges,
-        states.switchState,
-        states.bookmarkList,
-        states.searchValue,
-        states.categoryIndex
-    ]);
+    };
 
-    useEffect(() => {
+    const scrollDown = () => {
         const searchLength = states.searchValue.length;
 
         setCodeList((allCode) => allCode.slice(0, 60));
@@ -300,21 +292,41 @@ const IndexPage = ({ data }) => {
             window.addEventListener(`scroll`, handleScroll, false);
             return () => window.removeEventListener(`scroll`, handleScroll);
         }
-    }, [states.searchValue, states.categoryIndex, states.switchState]);
+    };
 
-    useEffect(() => {
-        let bookmark = [];
+    const getBookmark = () => {
+        {
+            let bookmark = [];
 
-        for (const [key, value] of Object.entries(localStorage)) {
-            if (!isNaN(Number(key))) {
-                const node = JSON.parse(value);
+            for (const [key, value] of Object.entries(localStorage)) {
+                if (!isNaN(Number(key))) {
+                    const node = JSON.parse(value);
 
-                bookmark.push({ node });
+                    bookmark.push({ node });
+                }
             }
-        }
 
-        dispatch({ type: `bookmarkList`, bookmarkList: bookmark });
-    }, [localStorage]);
+            dispatch({ type: `bookmarkList`, bookmarkList: bookmark });
+        }
+    };
+
+    list.current = codeList;
+
+    useEffect(() => getList(), [
+        edges,
+        states.switchState,
+        states.bookmarkList,
+        states.searchValue,
+        states.categoryIndex
+    ]);
+
+    useEffect(() => scrollDown(), [
+        states.searchValue,
+        states.categoryIndex,
+        states.switchState
+    ]);
+
+    useEffect(() => getBookmark(), [localStorage]);
 
     return (
         <Layout>
@@ -364,7 +376,7 @@ const IndexPage = ({ data }) => {
             <GoTop handleScrollTop={handleScrollTop} />
         </Layout>
     );
-};
+}
 
 IndexPage.propTypes = {
     data: PropTypes.object.isRequired

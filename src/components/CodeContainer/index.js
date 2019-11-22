@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 
 import "./index.scss";
 
-const CodeContainer = React.memo(({ children }) => (
-    <div className="code-container">{children}</div>
-));
+function CodeContainer({ children }) {
+    return <div className="code-container">{children}</div>;
+}
 
 CodeContainer.propTypes = {
     children: PropTypes.node.isRequired
 };
 
-export default CodeContainer;
+export default React.memo(CodeContainer);

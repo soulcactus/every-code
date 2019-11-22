@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import "./index.scss";
 
-const Search = ({ handleSearch }) => {
+function Search({ handleSearch }) {
     return (
         <>
             <input
@@ -15,7 +15,7 @@ const Search = ({ handleSearch }) => {
             />
         </>
     );
-};
+}
 
 Search.propTypes = {
     handleSearch: PropTypes.func.isRequired
