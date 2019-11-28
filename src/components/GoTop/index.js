@@ -31,4 +31,4 @@ GoTop.propTypes = {
     handleScrollTop: PropTypes.func.isRequired
 };
 
-export default GoTop;
+export default React.memo(GoTop);

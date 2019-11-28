@@ -40,4 +40,4 @@ CodeItem.propTypes = {
     children: PropTypes.node.isRequired
 };
 
-export default CodeItem;
+export default React.memo(CodeItem);

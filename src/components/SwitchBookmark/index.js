@@ -27,4 +27,4 @@ SwitchBookmark.propTypes = {
     handleSwitch: PropTypes.func.isRequired
 };
 
-export default SwitchBookmark;
+export default React.memo(SwitchBookmark);

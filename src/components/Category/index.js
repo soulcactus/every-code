@@ -53,4 +53,4 @@ Category.propTypes = {
     categoryIndex: PropTypes.number.isRequired
 };
 
-export default Category;
+export default React.memo(Category);
