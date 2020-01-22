@@ -6,7 +6,7 @@
   "author": "Soulcactus <sunhyejin@mensakorea.org>",
   "dependencies": {
     "crypto": "^1.0.1",
-    "gatsby": "^2.18.16",
+    "gatsby": "^2.19.1",
     "gatsby-image": "^2.2.18",
     "gatsby-plugin-google-analytics": "^2.1.17",
     "gatsby-plugin-manifest": "^2.2.16",
@@ -17,11 +17,12 @@
     "gatsby-plugin-sharp": "^2.2.21",
     "gatsby-source-filesystem": "^2.1.22",
     "gatsby-transformer-sharp": "^2.2.14",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "prop-types": "^15.7.2",
-    "react": "^16.9.0",
+    "react": "^16.12.0",
     "react-dom": "^16.9.0",
-    "react-helmet": "^5.2.1"
+    "react-helmet": "^5.2.1",
+    "sharp": "^0.24.0"
   },
   "devDependencies": {
     "gatsby-plugin-root-import": "^2.0.5",
