@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import "./index.scss";
+import './index.scss';
 
 function SwitchBookmark({ handleSwitch }) {
     return (
@@ -24,7 +24,7 @@ function SwitchBookmark({ handleSwitch }) {
 }
 
 SwitchBookmark.propTypes = {
-    handleSwitch: PropTypes.func.isRequired
+    handleSwitch: PropTypes.func.isRequired,
 };
 
 export default React.memo(SwitchBookmark);

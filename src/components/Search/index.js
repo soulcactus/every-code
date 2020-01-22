@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import "./index.scss";
+import './index.scss';
 
 function Search({ handleSearch }) {
     return (
@@ -18,7 +18,7 @@ function Search({ handleSearch }) {
 }
 
 Search.propTypes = {
-    handleSearch: PropTypes.func.isRequired
+    handleSearch: PropTypes.func.isRequired,
 };
 
 export default React.memo(Search);

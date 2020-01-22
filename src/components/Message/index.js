@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import "./index.scss";
+import './index.scss';
 
 function Message({ message }) {
     return (
@@ -14,7 +14,7 @@ function Message({ message }) {
 }
 
 Message.propTypes = {
-    message: PropTypes.string.isRequired
+    message: PropTypes.string.isRequired,
 };
 
 export default Message;

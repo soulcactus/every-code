@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import "./index.scss";
+import './index.scss';
 
-import goTop from "images/go-top.svg";
+import goTop from 'images/go-top.svg';
 
 function GoTop({ handleScrollTop }) {
     const scrollTop = () => {
@@ -28,7 +28,7 @@ function GoTop({ handleScrollTop }) {
 }
 
 GoTop.propTypes = {
-    handleScrollTop: PropTypes.func.isRequired
+    handleScrollTop: PropTypes.func.isRequired,
 };
 
 export default React.memo(GoTop);

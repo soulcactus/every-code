@@ -3,24 +3,24 @@ import React, {
     useReducer,
     useRef,
     useEffect,
-    useCallback
-} from "react";
-import PropTypes from "prop-types";
-import { graphql } from "gatsby";
+    useCallback,
+} from 'react';
+import PropTypes from 'prop-types';
+import { graphql } from 'gatsby';
 
-import Head from "components/Head";
-import Layout from "components/Layout";
-import Message from "components/Message";
-import SwitchBookmark from "components/SwitchBookmark";
-import Search from "components/Search";
-import NoResult from "components/NoResult";
-import Category from "components/Category";
-import CodeContainer from "components/CodeContainer";
-import CodeItem from "components/CodeItem";
-import GoTop from "components/GoTop";
+import Head from 'components/Head';
+import Layout from 'components/Layout';
+import Message from 'components/Message';
+import SwitchBookmark from 'components/SwitchBookmark';
+import Search from 'components/Search';
+import NoResult from 'components/NoResult';
+import Category from 'components/Category';
+import CodeContainer from 'components/CodeContainer';
+import CodeItem from 'components/CodeItem';
+import GoTop from 'components/GoTop';
 
-import unmarked from "images/bookmark-unmarked.svg";
-import marked from "images/bookmark-marked.svg";
+import unmarked from 'images/bookmark-unmarked.svg';
+import marked from 'images/bookmark-marked.svg';
 
 export const data = graphql`
     query codeQuery {
@@ -43,27 +43,27 @@ export const data = graphql`
 
 const reducer = (state, action) => {
     switch (action.type) {
-        case `switch`: {
+        case 'switch': {
             return { ...state, switchState: action.switch };
         }
 
-        case `search`: {
+        case 'search': {
             return { ...state, searchValue: action.search };
         }
 
-        case `category`: {
+        case 'category': {
             return { ...state, categoryIndex: action.category };
         }
 
-        case `bookmark`: {
+        case 'bookmark': {
             return { ...state, bookmarkState: action.bookmark };
         }
 
-        case `bookmarkList`: {
+        case 'bookmarkList': {
             return { ...state, bookmarkList: action.bookmarkList };
         }
 
-        case `copy`: {
+        case 'copy': {
             return { ...state, copyState: action.copy };
         }
 
@@ -75,16 +75,16 @@ const reducer = (state, action) => {
 
 const initialState = {
     switchState: false,
-    searchValue: ``,
+    searchValue: '',
     categoryIndex: 0,
     bookmarkState: false,
     bookmarkList: [],
-    copyState: false
+    copyState: false,
 };
 
 function IndexPage({ data }) {
     const localStorage =
-        typeof window !== `undefined` ? window.localStorage : null;
+        typeof window !== 'undefined' ? window.localStorage : null;
     const edges = data.allCode.edges;
     const initialCodeList = edges.slice(0, 60);
     const [codeList, setCodeList] = useState(initialCodeList);
@@ -99,32 +99,32 @@ function IndexPage({ data }) {
     const handleSwitch = useCallback((e) => {
         if (e.target.checked) {
             if (states.bookmarkList.length !== 0) {
-                dispatch({ type: `switch`, switch: true });
+                dispatch({ type: 'switch', switch: true });
             } else {
                 e.preventDefault();
                 e.target.checked = false;
             }
         } else {
-            dispatch({ type: `switch`, switch: false });
+            dispatch({ type: 'switch', switch: false });
         }
     });
 
     const handleSearch = useCallback((e) => {
-        dispatch({ type: `search`, search: e.target.value });
+        dispatch({ type: 'search', search: e.target.value });
     });
 
     const handleCategory = useCallback((index) => {
-        dispatch({ type: `category`, category: index });
+        dispatch({ type: 'category', category: index });
     });
 
     const handleBookmark = useCallback((e, node) => {
         const nodeId = node.id;
         const overlapCode = states.bookmarkList.filter(
-            (item) => nodeId === item.node.id
+            (item) => nodeId === item.node.id,
         );
 
         const removeRestCodes = states.bookmarkList.filter(
-            (item) => nodeId !== item.node.id
+            (item) => nodeId !== item.node.id,
         );
 
         e.stopPropagation();
@@ -133,34 +133,34 @@ function IndexPage({ data }) {
             localStorage.setItem(nodeId, JSON.stringify(node));
 
             dispatch({
-                type: `bookmarkList`,
-                bookmarkList: [...states.bookmarkList, { node }]
+                type: 'bookmarkList',
+                bookmarkList: [...states.bookmarkList, { node }],
             });
 
-            dispatch({ type: `bookmark`, bookmark: true });
+            dispatch({ type: 'bookmark', bookmark: true });
 
             setTimeout(() => {
-                dispatch({ type: `bookmark`, bookmark: false });
+                dispatch({ type: 'bookmark', bookmark: false });
             }, 500);
         } else {
             localStorage.removeItem(nodeId);
-            dispatch({ type: `bookmarkList`, bookmarkList: removeRestCodes });
+            dispatch({ type: 'bookmarkList', bookmarkList: removeRestCodes });
         }
     });
 
     const handleCopy = useCallback((code) => {
         const body = document.body;
-        const dummy = document.createElement(`textarea`);
+        const dummy = document.createElement('textarea');
 
         body.appendChild(dummy);
         dummy.value = code;
         dummy.select();
-        document.execCommand(`copy`);
+        document.execCommand('copy');
         body.removeChild(dummy);
-        dispatch({ type: `copy`, copy: true });
+        dispatch({ type: 'copy', copy: true });
 
         setTimeout(() => {
-            dispatch({ type: `copy`, copy: false });
+            dispatch({ type: 'copy', copy: false });
         }, 500);
     });
 
@@ -180,37 +180,37 @@ function IndexPage({ data }) {
             (listLength - searchLength > 1 && listLength - searchLength <= 60);
 
         const categoryList = [
-            `Standard`,
-            `Emoji`,
-            `Latin`,
-            `Modifier Letters`,
-            `Diacritical Marks`,
-            `Greek and Coptic`,
-            `Cyrillic`,
-            `General Punctuation`,
-            `Currency Symbols`,
-            `Letterlike Symbols`,
-            `Arrows`,
-            `Mathematical Operators`,
-            `Box Drawings`,
-            `Block Elements`,
-            `Geometric Shapes`,
-            `Miscellaneous Symbols`,
-            `Dingbats`
+            'Standard',
+            'Emoji',
+            'Latin',
+            'Modifier Letters',
+            'Diacritical Marks',
+            'Greek and Coptic',
+            'Cyrillic',
+            'General Punctuation',
+            'Currency Symbols',
+            'Letterlike Symbols',
+            'Arrows',
+            'Mathematical Operators',
+            'Box Drawings',
+            'Block Elements',
+            'Geometric Shapes',
+            'Miscellaneous Symbols',
+            'Dingbats',
         ];
 
         let bookmarkRestCodes;
 
         if (searchLength !== 0) {
             const searchCodes = edges.filter((item) =>
-                states.searchValue.includes(item.node.char)
+                states.searchValue.includes(item.node.char),
             );
 
             setCodeList(searchCodes);
         } else {
             if (states.categoryIndex === 0) {
                 const filter = edges.filter(
-                    (item) => !bookmarkIdList.includes(item.node.id)
+                    (item) => !bookmarkIdList.includes(item.node.id),
                 );
 
                 setCodeList(initialCodeList);
@@ -219,12 +219,12 @@ function IndexPage({ data }) {
                     if (expression()) {
                         bookmarkRestCodes = filter.slice(
                             0,
-                            60 - bookmarkLength
+                            60 - bookmarkLength,
                         );
                     } else {
                         bookmarkRestCodes = filter.slice(
                             0,
-                            listLength - bookmarkLength
+                            listLength - bookmarkLength,
                         );
                     }
                 }
@@ -236,16 +236,17 @@ function IndexPage({ data }) {
                 const filter = edges.filter(
                     (item) =>
                         item.node.category === categoryList[i] &&
-                        !bookmarkIdList.includes(item.node.id)
+                        !bookmarkIdList.includes(item.node.id),
                 );
 
                 if (states.categoryIndex === i + 1) {
                     setCodeList(
                         edges
                             .filter(
-                                (item) => item.node.category === categoryList[i]
+                                (item) =>
+                                    item.node.category === categoryList[i],
                             )
-                            .slice(0, 60)
+                            .slice(0, 60),
                     );
 
                     codes.current = filter;
@@ -254,12 +255,12 @@ function IndexPage({ data }) {
                         if (expression()) {
                             bookmarkRestCodes = filter.slice(
                                 0,
-                                60 - bookmarkLength
+                                60 - bookmarkLength,
                             );
                         } else {
                             bookmarkRestCodes = filter.slice(
                                 0,
-                                listLength - bookmarkLength
+                                listLength - bookmarkLength,
                             );
                         }
                     }
@@ -288,15 +289,15 @@ function IndexPage({ data }) {
 
                     return [
                         ...previousCodes,
-                        ...codes.current.slice(previousCodes.length, addList)
+                        ...codes.current.slice(previousCodes.length, addList),
                     ];
                 });
             }
         };
 
         if (searchLength === 0 && !states.switchState) {
-            window.addEventListener(`scroll`, handleScroll, false);
-            return () => window.removeEventListener(`scroll`, handleScroll);
+            window.addEventListener('scroll', handleScroll, false);
+            return () => window.removeEventListener('scroll', handleScroll);
         }
     };
 
@@ -312,7 +313,7 @@ function IndexPage({ data }) {
                 }
             }
 
-            dispatch({ type: `bookmarkList`, bookmarkList: bookmark });
+            dispatch({ type: 'bookmarkList', bookmarkList: bookmark });
         }
     };
 
@@ -323,13 +324,13 @@ function IndexPage({ data }) {
         states.switchState,
         states.bookmarkList,
         states.searchValue,
-        states.categoryIndex
+        states.categoryIndex,
     ]);
 
     useEffect(() => scrollDown(), [
         states.searchValue,
         states.categoryIndex,
-        states.switchState
+        states.switchState,
     ]);
 
     useEffect(() => getBookmark(), [localStorage]);
@@ -338,10 +339,10 @@ function IndexPage({ data }) {
         <Layout>
             <Head title="main" />
             {states.copyState && (
-                <Message message={`Copied to Clipboard! 😊`} />
+                <Message message={'Copied to Clipboard! 😊'} />
             )}
             {states.bookmarkState && (
-                <Message message={`Added to the bookmark! ⭐️`} />
+                <Message message={'Added to the bookmark! ⭐️'} />
             )}
             <SwitchBookmark handleSwitch={handleSwitch} />
             <Search handleSearch={handleSearch} />
@@ -385,7 +386,7 @@ function IndexPage({ data }) {
 }
 
 IndexPage.propTypes = {
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
 };
 
 export default IndexPage;

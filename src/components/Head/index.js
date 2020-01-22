@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Helmet from "react-helmet";
-import { StaticQuery, graphql } from "gatsby";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
+import { StaticQuery, graphql } from 'gatsby';
 
 const detailsQuery = graphql`
     query DefaultSEOQuery {
@@ -40,45 +40,46 @@ function Head({ lang, meta, title }) {
                     return (
                         <Helmet
                             htmlAttributes={{
-                                lang
+                                lang,
                             }}
                             title={title}
                             titleTemplate={`${data.site.siteMetadata.title}`}
                             meta={[
                                 {
-                                    name: `description`,
-                                    content: metaDescription
+                                    name: 'description',
+                                    content: metaDescription,
                                 },
                                 {
-                                    property: `og:title`,
-                                    content: data.site.siteMetadata.title
+                                    property: 'og:title',
+                                    content: data.site.siteMetadata.title,
                                 },
                                 {
-                                    property: `og:image`,
-                                    content: `${data.site.siteMetadata.siteUrl}${data.site.siteMetadata.image}`
+                                    property: 'og:image',
+                                    content: `${data.site.siteMetadata.siteUrl}${data.site.siteMetadata.image}`,
                                 },
                                 {
-                                    property: `og:description`,
-                                    content: metaDescription
+                                    property: 'og:description',
+                                    content: metaDescription,
                                 },
                                 {
-                                    property: `og:type`,
-                                    content: `website`
+                                    property: 'og:type',
+                                    content: 'website',
                                 },
                                 {
-                                    name: `google-site-verification`,
-                                    content: `CuSkWObnLIgbk3n4J-eSJiQ6w1pt-MtfZYo3s2dOHaI`
-                                }
+                                    name: 'google-site-verification',
+                                    content:
+                                        'CuSkWObnLIgbk3n4J-eSJiQ6w1pt-MtfZYo3s2dOHaI',
+                                },
                             ]
                                 .concat(
                                     data.site.siteMetadata.keywords.length > 0
                                         ? {
-                                              name: `keywords`,
+                                              name: 'keywords',
                                               content: data.site.siteMetadata.keywords.join(
-                                                  `, `
-                                              )
+                                                  ', ',
+                                              ),
                                           }
-                                        : []
+                                        : [],
                                 )
                                 .concat(meta)}
                         />
@@ -90,14 +91,14 @@ function Head({ lang, meta, title }) {
 }
 
 Head.defaultProps = {
-    lang: `en`,
-    meta: []
+    lang: 'en',
+    meta: [],
 };
 
 Head.propTypes = {
     lang: PropTypes.string,
     meta: PropTypes.array,
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
 };
 
 export default Head;

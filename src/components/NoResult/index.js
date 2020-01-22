@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import "./index.scss";
+import './index.scss';
 
-import noResult from "images/no-result.png";
+import noResult from 'images/no-result.png';
 
 function NoResult() {
     return (

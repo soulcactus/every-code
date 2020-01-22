@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import "./index.scss";
+import './index.scss';
 
 function CodeItem({ node, handleCopy, handleBookmark, children }) {
     const codeList = (code, codeType) => (
@@ -24,10 +24,10 @@ function CodeItem({ node, handleCopy, handleBookmark, children }) {
                 <span>{node.char}</span>
             </div>
             <ul>
-                {node.htmlEntity && codeList(node.htmlEntity, `HTML Entity`)}
-                {codeList(node.htmlCode, `HTML Code`)}
-                {codeList(node.hexCode, `HEX Code`)}
-                {codeList(node.cssCode, `CSS Code`)}
+                {node.htmlEntity && codeList(node.htmlEntity, 'HTML Entity')}
+                {codeList(node.htmlCode, 'HTML Code')}
+                {codeList(node.hexCode, 'HEX Code')}
+                {codeList(node.cssCode, 'CSS Code')}
             </ul>
         </div>
     );
@@ -37,7 +37,7 @@ CodeItem.propTypes = {
     node: PropTypes.object.isRequired,
     handleCopy: PropTypes.func.isRequired,
     handleBookmark: PropTypes.func.isRequired,
-    children: PropTypes.node.isRequired
+    children: PropTypes.node.isRequired,
 };
 
 export default React.memo(CodeItem);

@@ -1,12 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "gatsby";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'gatsby';
 
-import logo from "images/logo.svg";
-import buyMeACoffee from "images/buy-me-a-coffee.png";
-import github from "images/github.svg";
+import logo from 'images/logo.svg';
+import buyMeACoffee from 'images/buy-me-a-coffee.png';
+import github from 'images/github.svg';
 
-import "./index.scss";
+import './index.scss';
 
 function Header({ siteTitle }) {
     return (
@@ -41,7 +41,7 @@ function Header({ siteTitle }) {
 }
 
 Header.propTypes = {
-    siteTitle: PropTypes.string
+    siteTitle: PropTypes.string,
 };
 
 export default React.memo(Header);

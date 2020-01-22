@@ -1,28 +1,28 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import "./index.scss";
+import './index.scss';
 
 function Category({ handleCategory, categoryIndex }) {
     const categoryList = [
-        `ALL`,
-        `Standard`,
-        `Emoji 😎`,
-        `Latin`,
-        `Modifier Letters`,
-        `Diacritical Marks`,
-        `Greek and Coptic`,
-        `Cyrillic`,
-        `General Punctuation`,
-        `Currency Symbols`,
-        `Letterlike Symbols`,
-        `Arrows`,
-        `Mathematical Operators`,
-        `Box Drawings`,
-        `Block Elements`,
-        `Geometric Shapes`,
-        `Miscellaneous Symbols`,
-        `Dingbats`
+        'ALL',
+        'Standard',
+        'Emoji 😎',
+        'Latin',
+        'Modifier Letters',
+        'Diacritical Marks',
+        'Greek and Coptic',
+        'Cyrillic',
+        'General Punctuation',
+        'Currency Symbols',
+        'Letterlike Symbols',
+        'Arrows',
+        'Mathematical Operators',
+        'Box Drawings',
+        'Block Elements',
+        'Geometric Shapes',
+        'Miscellaneous Symbols',
+        'Dingbats',
     ];
 
     return (
@@ -41,7 +41,7 @@ function Category({ handleCategory, categoryIndex }) {
                         <li onClick={() => handleCategory(index)} key={index}>
                             <span>{item}</span>
                         </li>
-                    )
+                    ),
                 )}
             </ul>
         </div>
@@ -50,7 +50,7 @@ function Category({ handleCategory, categoryIndex }) {
 
 Category.propTypes = {
     handleCategory: PropTypes.func.isRequired,
-    categoryIndex: PropTypes.number.isRequired
+    categoryIndex: PropTypes.number.isRequired,
 };
 
 export default React.memo(Category);
