@@ -29,7 +29,13 @@ website : HTML Entity, Emoji, HTML Currency Symbol and Character Codes for Marku
 
 ### 1. Clone a repository or download ZIP
 
-[![](./src/images/github-button.png)](https://github.com/soulcactus/every-code.git)
+```bash
+$ git clone https://github.com/soulcactus/every-code.git
+```
+
+#### Download
+
+[![](./src/images/download.png)](https://github.com/soulcactus/every-code/archive/master.zip)
 
 ### 2. Install packages and start
 
