@@ -5,15 +5,13 @@ import './index.scss';
 
 function Search({ handleSearch }) {
     return (
-        <>
-            <input
-                type="search"
-                id="search"
-                className="search"
-                placeholder="👉 Search what you want"
-                onChange={handleSearch}
-            />
-        </>
+        <input
+            type="search"
+            id="search"
+            className="search"
+            placeholder="👉 Search what you want"
+            onChange={handleSearch}
+        />
     );
 }
 

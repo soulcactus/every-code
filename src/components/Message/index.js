@@ -5,11 +5,9 @@ import './index.scss';
 
 function Message({ message }) {
     return (
-        <>
-            <div className="message">
-                <span>{message}</span>
-            </div>
-        </>
+        <div className="message">
+            <span>{message}</span>
+        </div>
     );
 }
 

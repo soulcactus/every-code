@@ -319,7 +319,11 @@ function IndexPage({ data }) {
 
     list.current = codeList;
 
-    useEffect(() => getList(), [
+    // useEffect(() => {
+    //     location.href = 'https://everycode.shop/';
+    // }, []);
+
+    useEffect(getList, [
         edges,
         states.switchState,
         states.bookmarkList,
@@ -327,13 +331,13 @@ function IndexPage({ data }) {
         states.categoryIndex,
     ]);
 
-    useEffect(() => scrollDown(), [
+    useEffect(scrollDown, [
         states.searchValue,
         states.categoryIndex,
         states.switchState,
     ]);
 
-    useEffect(() => getBookmark(), [localStorage]);
+    useEffect(getBookmark, [localStorage]);
 
     return (
         <Layout>
