@@ -23,7 +23,7 @@ function Layout({ children }) {
                 <main>{children}</main>
             </div>
             <footer>
-                Copyright &copy; 2019 Soulcactus&#46; All right reserved&#46;
+                Copyright &copy; 2020 Soulcactus&#46; All right reserved&#46;
             </footer>
         </>
     );
