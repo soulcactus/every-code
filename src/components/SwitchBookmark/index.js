@@ -8,7 +8,7 @@ function SwitchBookmark({ handleSwitch }) {
         <>
             <div className="notice">
                 📢 NOTICE &#58; URL changes from https://everycode.store/ to{' '}
-                <b>https://everycode.shop/</b> in September&#46;
+                <a href="https://everycode.shop/">https://everycode.shop/</a>
             </div>
             <div className="switch-wrap">
                 <p>

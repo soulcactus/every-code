@@ -319,10 +319,6 @@ function IndexPage({ data }) {
 
     list.current = codeList;
 
-    // useEffect(() => {
-    //     location.href = 'https://everycode.shop/';
-    // }, []);
-
     useEffect(getList, [
         edges,
         states.switchState,
