@@ -22,9 +22,7 @@ function Layout({ children }) {
             <div className="content-wrap">
                 <main>{children}</main>
             </div>
-            <footer>
-                Copyright &copy; 2020 Soulcactus&#46; All right reserved&#46;
-            </footer>
+            <footer>&copy;Soulcactus</footer>
         </>
     );
 }
