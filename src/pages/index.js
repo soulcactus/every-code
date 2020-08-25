@@ -306,12 +306,26 @@ function IndexPage({ data }) {
             let bookmark = [];
 
             for (const [key, value] of Object.entries(localStorage)) {
-                if (!isNaN(Number(key))) {
+                if (!isNaN(Number(key)) && value) {
                     const node = JSON.parse(value);
 
                     bookmark.push({ node });
                 }
             }
+
+            bookmark = bookmark.filter(
+                (item) =>
+                    item.node.hasOwnProperty('category') &&
+                    item.node.hasOwnProperty('char') &&
+                    item.node.hasOwnProperty('cssCode') &&
+                    item.node.hasOwnProperty('hexCode') &&
+                    item.node.hasOwnProperty('htmlCode') &&
+                    item.node.hasOwnProperty('htmlEntity') &&
+                    item.node.hasOwnProperty('id') &&
+                    item.node.hasOwnProperty('name') &&
+                    Object.values(item.node).filter((value) => value).length >=
+                        7,
+            );
 
             dispatch({ type: 'bookmarkList', bookmarkList: bookmark });
         }
