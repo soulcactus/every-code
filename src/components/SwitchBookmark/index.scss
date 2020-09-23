@@ -1,29 +1,10 @@
 @import "src/styles/modules.scss";
 @import "src/styles/variables.scss";
 
-.notice {
-    @include border(red, 0.3);
-    margin-top: 8.5rem;
-    border-radius: 1rem;
-    padding: 1rem;
-    background: rgba(yellow, 0.3);
-    font-weight: bold;
-    color: $brand-text;
-    transition: font-size 200ms linear;
-
-    @include for-size(mobile-landscape) {
-        line-height: 2.2rem;
-    }
-
-    a {
-        color: blue;
-    }
-}
-
 .switch-wrap {
     height: 2.8rem;
     @include space-between(nowrap);
-    margin-top: 1.5rem;
+    margin-top: 8rem;
     position: relative;
 
     p {
