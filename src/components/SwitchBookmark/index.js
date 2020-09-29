@@ -11,12 +11,16 @@ function SwitchBookmark({ handleSwitch }) {
                     ⚠ WARNING&#33; Removing the browser cache will also remove
                     your bookmarks&#46;
                 </p>
-                <div title="Only bookmarks">
+                <div>
                     <span role="img" aria-label="star">
                         ⭐
                     </span>
                     <label>
-                        <input type="checkbox" onChange={handleSwitch} />
+                        <input
+                            type="checkbox"
+                            title="show bookmarks only"
+                            onChange={handleSwitch}
+                        />
                         <span></span>
                     </label>
                 </div>

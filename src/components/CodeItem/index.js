@@ -4,30 +4,54 @@ import PropTypes from 'prop-types';
 import './index.scss';
 
 function CodeItem({ node, handleCopy, handleBookmark, children }) {
-    const codeList = (code, codeType) => (
+    const codeList = (code, codeType, codeTitle) => (
         <li onClick={() => handleCopy(code)}>
-            {code}
-            <span>{codeType}</span>
+            <a href="#none" title={codeTitle}>
+                {code}
+            </a>
+            <a href="#none" title={codeTitle}>
+                {codeType}
+            </a>
         </li>
     );
 
     return (
         <div className="code-item" key={node.id}>
-            <div title={node.name} onClick={() => handleCopy(node.char)}>
+            <div onClick={() => handleCopy(node.char)}>
                 <div
                     className="bookmark"
-                    title="bookmark"
                     onClick={(e) => handleBookmark(e, node)}
                 >
-                    {children}
+                    <a href="#none" title="add bookmarks!">
+                        {children}
+                    </a>
                 </div>
-                <span>{node.char}</span>
+                <a href="#none" title={node.name}>
+                    {node.char}
+                </a>
             </div>
             <ul>
-                {node.htmlEntity && codeList(node.htmlEntity, 'HTML Entity')}
-                {codeList(node.htmlCode, 'HTML Code')}
-                {codeList(node.hexCode, 'HEX Code')}
-                {codeList(node.cssCode, 'CSS Code')}
+                {node.htmlEntity &&
+                    codeList(
+                        node.htmlEntity,
+                        'HTML Entity',
+                        `converting ${node.char} to HTML Entity is ${node.htmlEntity}. copy to clipboard!`,
+                    )}
+                {codeList(
+                    node.htmlCode,
+                    'HTML Code',
+                    `converting ${node.char} to HTML Code is ${node.htmlCode}. copy to clipboard!`,
+                )}
+                {codeList(
+                    node.hexCode,
+                    'HEX Code',
+                    `converting ${node.char} to HEX Code is ${node.hexCode}. copy to clipboard!`,
+                )}
+                {codeList(
+                    node.cssCode,
+                    'CSS Code',
+                    `converting ${node.char} to CSS Code is ${node.cssCode}. copy to clipboard!`,
+                )}
             </ul>
         </div>
     );

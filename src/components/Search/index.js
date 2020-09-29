@@ -11,6 +11,7 @@ function Search({ handleSearch }) {
             className="search"
             placeholder="👉 Search what you want"
             onChange={handleSearch}
+            title="search code what you want!"
         />
     );
 }

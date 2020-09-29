@@ -5,8 +5,12 @@ import './index.scss';
 
 function Message({ message }) {
     return (
-        <div className="message">
-            <span>{message}</span>
+        <div
+            className="message"
+            role="alertdialog"
+            aria-labelledby="dialogTitle"
+        >
+            <span id="dialogTitle">{message}</span>
         </div>
     );
 }

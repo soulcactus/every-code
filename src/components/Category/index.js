@@ -35,11 +35,11 @@ function Category({ handleCategory, categoryIndex }) {
                             onClick={() => handleCategory(index)}
                             key={index}
                         >
-                            <span>{item}</span>
+                            <a href="#">{item}</a>
                         </li>
                     ) : (
                         <li onClick={() => handleCategory(index)} key={index}>
-                            <span>{item}</span>
+                            <a href="#">{item}</a>
                         </li>
                     ),
                 )}

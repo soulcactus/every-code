@@ -1,5 +1,5 @@
-@import "src/styles/modules.scss";
-@import "src/styles/variables.scss";
+@import 'src/styles/modules.scss';
+@import 'src/styles/variables.scss';
 
 .code-item {
     flex-basis: calc((100% - 6rem) / 6);
@@ -42,16 +42,34 @@
         background: $brand;
         @include pointer;
 
-        span {
+        a {
             height: 4rem;
             font-size: 4rem;
             font-weight: bold;
             color: $white;
             margin: 0;
         }
+
+        .bookmark {
+            position: absolute;
+            top: 0rem;
+            right: 0.5rem;
+            font-size: 1rem;
+            color: $white;
+            @include pointer;
+
+            a {
+                height: auto;
+                font-size: inherit;
+            }
+
+            img {
+                width: 1.5rem;
+            }
+        }
     }
 
-    span {
+    a {
         display: block;
         margin-bottom: 0.5rem;
         font-size: 1.2rem;
@@ -59,27 +77,16 @@
     }
 
     li {
-        line-height: 1.25;
-        font-size: 1.6rem;
-        font-weight: bold;
-        color: $brand-text;
-        @include pointer;
-
-        span {
+        a {
             color: $brand;
+
+            &:first-child {
+                line-height: 1.25;
+                font-size: 1.6rem;
+                font-weight: bold;
+                color: $brand-text;
+                @include pointer;
+            }
         }
-    }
-}
-
-.bookmark {
-    position: absolute;
-    top: 0rem;
-    right: 0.5rem;
-    font-size: 1rem;
-    color: $white;
-    @include pointer;
-
-    img {
-        width: 1.5rem;
     }
 }
