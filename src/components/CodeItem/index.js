@@ -22,9 +22,7 @@ function CodeItem({ node, handleCopy, handleBookmark, children }) {
                     className="bookmark"
                     onClick={(e) => handleBookmark(e, node)}
                 >
-                    <a href="#none" title="add bookmarks!">
-                        {children}
-                    </a>
+                    <button type="button">{children}</button>
                 </div>
                 <a href="#none" title={node.name}>
                     {node.char}

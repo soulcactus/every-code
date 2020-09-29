@@ -49,24 +49,6 @@
             color: $white;
             margin: 0;
         }
-
-        .bookmark {
-            position: absolute;
-            top: 0rem;
-            right: 0.5rem;
-            font-size: 1rem;
-            color: $white;
-            @include pointer;
-
-            a {
-                height: auto;
-                font-size: inherit;
-            }
-
-            img {
-                width: 1.5rem;
-            }
-        }
     }
 
     a {
@@ -88,5 +70,23 @@
                 @include pointer;
             }
         }
+    }
+}
+
+.bookmark {
+    position: absolute;
+    top: 0rem;
+    right: 0.5rem;
+    font-size: 1rem;
+    color: $white;
+    @include pointer;
+
+    button {
+        border: 0;
+        background: transparent;
+    }
+
+    img {
+        width: 1.5rem;
     }
 }
