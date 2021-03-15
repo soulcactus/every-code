@@ -3,7 +3,6 @@ import React, {
     useReducer,
     useRef,
     useEffect,
-    useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
@@ -96,7 +95,7 @@ function IndexPage({ data }) {
         ((window.scrollY + window.innerHeight) / document.body.clientHeight) *
         100;
 
-    const handleSwitch = useCallback((e) => {
+    const handleSwitch = (e) => {
         if (e.target.checked) {
             if (states.bookmarkList.length !== 0) {
                 dispatch({ type: 'switch', switch: true });
@@ -107,17 +106,17 @@ function IndexPage({ data }) {
         } else {
             dispatch({ type: 'switch', switch: false });
         }
-    });
+    }
 
-    const handleSearch = useCallback((e) => {
+    const handleSearch = (e) => {
         dispatch({ type: 'search', search: e.target.value });
-    });
+    }
 
-    const handleCategory = useCallback((index) => {
+    const handleCategory = (index) => {
         dispatch({ type: 'category', category: index });
-    });
+    }
 
-    const handleBookmark = useCallback((e, node) => {
+    const handleBookmark = (e, node) => {
         const nodeId = node.id;
         const overlapCode = states.bookmarkList.filter(
             (item) => nodeId === item.node.id,
@@ -146,9 +145,9 @@ function IndexPage({ data }) {
             localStorage.removeItem(nodeId);
             dispatch({ type: 'bookmarkList', bookmarkList: removeRestCodes });
         }
-    });
+    }
 
-    const handleCopy = useCallback((code) => {
+    const handleCopy = (code) => {
         const body = document.body;
         const dummy = document.createElement('textarea');
 
@@ -162,11 +161,11 @@ function IndexPage({ data }) {
         setTimeout(() => {
             dispatch({ type: 'copy', copy: false });
         }, 500);
-    });
+    }
 
-    const handleScrollTop = useCallback(() => {
+    const handleScrollTop = () => {
         setCodeList((allCode) => allCode.slice(0, 60));
-    });
+    }
 
     const getList = () => {
         const initialCodeList = edges.slice(0, 60);
